@@ -1,6 +1,7 @@
 *.js
 !three.js
 !dat.gui.js
+!webgldetector.js
 .DS_Store
 .DS_Store?
 .Trashes

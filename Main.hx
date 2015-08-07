@@ -1,14 +1,29 @@
 package;
 
 import dat.*;
+import dat.GUI;
 import js.Browser;
 import js.three.*;
+import WebGLDetector;
 
-class Main
-{
-    public static function main()
-    {
+class Main {
+    public static function main():Void {
+		var glSupported:WebGLSupport = WebGLDetector.detect();
+		
+		if (glSupported != SUPPORTED_AND_ENABLED) {
+			switch(glSupported) {
+				case WebGLSupport.NOT_SUPPORTED:
+					return;
+				case WebGLSupport.SUPPORTED_BUT_DISABLED:
+					return;
+				default:
+					return;
+			}
+		}
+		
 		var gui = new GUI( { autoPlace:true } );
+		
+		// Black background as in Beneath the Cave
 		
         var container, stats;
         var camera, scene, projector, renderer;
@@ -42,8 +57,7 @@ class Main
 		
         var geometry = new CubeGeometry(20, 20, 20);
 		
-        for (i in 0...500)
-		{
+        for (i in 0...500) {
             var object = new Mesh(geometry, new MeshLambertMaterial({ color: std.Math.round(std.Math.random() * 0xffffff) }));
 			
             object.position.x = std.Math.random() * 800 - 400;
@@ -77,8 +91,7 @@ class Main
         stats.domElement.style.top = '0px';
         container.appendChild(stats.domElement);
 		
-        Browser.document.addEventListener('mousemove', function(event)
-		{
+        Browser.document.addEventListener('mousemove', function(event) {
             event.preventDefault();
 			
             mouse.x = (event.clientX / Browser.window.innerWidth) * 2 - 1;
@@ -89,8 +102,7 @@ class Main
         var theta = 0.0;
 		
         var timer = new haxe.Timer(std.Math.round(1000/60));
-        timer.run = function()
-		{
+        timer.run = function() {
             theta += 0.2;
 			
             camera.position.x = radius * std.Math.sin(theta * std.Math.PI / 360);
@@ -108,10 +120,8 @@ class Main
 			
             var intersects = raycaster.intersectObjects(objects);
 			
-            if (intersects.length > 0)
-			{
-                if (INTERSECTED != intersects[ 0 ].object)
-				{
+            if (intersects.length > 0) {
+                if (INTERSECTED != intersects[ 0 ].object) {
                     if (INTERSECTED != null) (cast INTERSECTED).material.color.setHex(INTERSECTED.currentHex);
 					
                     INTERSECTED = intersects[ 0 ].object;
@@ -119,8 +129,7 @@ class Main
                     INTERSECTED.material.color.setHex(0xff0000);
                 }
             }
-			else
-			{
+			else {
                 if (INTERSECTED != null) INTERSECTED.material.color.setHex(INTERSECTED.currentHex);
                 INTERSECTED = null;
             }
