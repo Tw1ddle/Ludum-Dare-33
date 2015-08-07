@@ -1,95 +1,117 @@
 package;
 
-import dat.*;
 import dat.GUI;
 import js.Browser;
-import js.three.*;
+import js.three.FogExp2;
+import js.three.Geometry;
+import js.three.ImageUtils;
+import js.three.Object3D;
+import js.three.PerspectiveCamera;
+import js.three.PointCloud;
+import js.three.PointCloudMaterial;
+import js.three.Projector;
+import js.three.Raycaster;
+import js.three.Scene;
+import js.three.Vector3;
+import js.three.WebGLRenderer;
 import WebGLDetector;
 
-class Main {
+class Main {	
+	private static inline var REPO_URL:String = "https://github.com/Tw1ddle/ludum-dare-33";
+	
+	private static inline var GAME_WIDTH:Int = 800;
+	private static inline var GAME_HEIGHT:Int = 500;
+	
+	public var gui(default, null):GUI;
+	
     public static function main():Void {
+		var main = new Main();
+    }
+	
+	public function new() {
+		Browser.window.onload = onWindowLoaded;
+	}
+	
+	public inline function onWindowLoaded():Void {
+		var gameDiv = Browser.document.getElementById("game");
+		
 		var glSupported:WebGLSupport = WebGLDetector.detect();
 		
+		var container = Browser.document.createElement("attach");
+		gameDiv.appendChild(container);
+		
 		if (glSupported != SUPPORTED_AND_ENABLED) {
+			var unsupportedInfo = Browser.document.createElement('div');
+			unsupportedInfo.style.position = 'absolute';
+			unsupportedInfo.style.top = '10px';
+			unsupportedInfo.style.width = '100%';
+			unsupportedInfo.style.textAlign = 'center';
+			unsupportedInfo.style.color = '#ffffff';
+			
 			switch(glSupported) {
 				case WebGLSupport.NOT_SUPPORTED:
-					return;
+					unsupportedInfo.innerHTML = 'Your browser does not support WebGL. Click <a href="' + REPO_URL + '" target="_blank">here for screenshots</a> instead.';
 				case WebGLSupport.SUPPORTED_BUT_DISABLED:
-					return;
+					unsupportedInfo.innerHTML = 'Your browser supports WebGL, but the feature appears to be disabled. Click <a href="' + REPO_URL + '" target="_blank">here for screenshots</a> instead.';
 				default:
-					return;
+					unsupportedInfo.innerHTML = 'Could not detect WebGL support. Click <a href="' + REPO_URL + '" target="_blank">here for screenshots</a> instead.';
 			}
+			
+			container.appendChild(unsupportedInfo);
+			return;
 		}
 		
-		var gui = new GUI( { autoPlace:true } );
+		gui = new GUI( { autoPlace:true } );
 		
 		// Black background as in Beneath the Cave
+		// Stars using http://mathworld.wolfram.com/DiskPointPicking.html with density function for semicircle cutoff effect
+		// Camera jumping between screens when moving horizontally as in Beneath the Cave
 		
-        var container, stats;
-        var camera, scene, projector, renderer;
         var mouse = { x: 0.0, y: 0.0 };
         var objects = new Array<Object3D>();
         var INTERSECTED : Dynamic = null;
 		
-		container = Browser.document.createElement('div' );
-        Browser.document.body.appendChild(container);
-		
-        var info = Browser.document.createElement('div' );
-        info.style.position = 'absolute';
-        info.style.top = '10px';
-        info.style.width = '100%';
-        info.style.textAlign = 'center';
-        info.innerHTML = '<a href="http://github.com/mrdoob/three.js" target="_blank">three.js</a> webgl - interactive cubes';
-        container.appendChild(info);
-		
-        camera = new PerspectiveCamera(70, Browser.window.innerWidth / Browser.window.innerHeight, 1, 10000);
+        var camera = new PerspectiveCamera(70, GAME_WIDTH / GAME_HEIGHT, 1, 10000);
         camera.position.set(0, 300, 500);
 		
-        scene = new Scene();
+        var scene = new Scene();
+		scene.fog = new FogExp2( 0x000000, 0.0008 );
         scene.add(camera);
-        var light = new DirectionalLight(0xffffff, 2);
-        light.position.set(1, 1, 1).normalize();
-        scene.add(light);
 		
-        var light = new DirectionalLight(0xffffff);
-        light.position.set(-1, -1, -1).normalize();
-        scene.add(light);
+        var projector = new Projector();
 		
-        var geometry = new CubeGeometry(20, 20, 20);
-		
-        for (i in 0...500) {
-            var object = new Mesh(geometry, new MeshLambertMaterial({ color: std.Math.round(std.Math.random() * 0xffffff) }));
-			
-            object.position.x = std.Math.random() * 800 - 400;
-            object.position.y = std.Math.random() * 800 - 400;
-            object.position.z = std.Math.random() * 800 - 400;
-			
-            object.rotation.x = std.Math.random() * 360 * std.Math.PI / 180;
-            object.rotation.y = std.Math.random() * 360 * std.Math.PI / 180;
-            object.rotation.z = std.Math.random() * 360 * std.Math.PI / 180;
-			
-            object.scale.x = std.Math.random() * 2 + 1;
-            object.scale.y = std.Math.random() * 2 + 1;
-            object.scale.z = std.Math.random() * 2 + 1;
-			
-            scene.add(object);
-			
-            objects.push(object);
-        }
-		
-        projector = new Projector();
-		
-        //renderer = new WebGLRenderer();
-        renderer = new CanvasRenderer();
+        var renderer = new WebGLRenderer();
         renderer.sortObjects = false;
-        renderer.setSize(Browser.window.innerWidth, Browser.window.innerHeight);
+        renderer.setSize(GAME_WIDTH, GAME_HEIGHT);
 		
         container.appendChild(renderer.domElement);
 		
-        stats = new js.three.utils.Stats();
+        var stats = new js.three.utils.Stats();
         stats.domElement.style.position = 'absolute';
         stats.domElement.style.top = '0px';
         container.appendChild(stats.domElement);
+		
+		var geometry = new Geometry();
+		
+		var i:Int = 0;
+		for (i in 0...5000) {
+			var vector = new Vector3( Math.random() * 2000 - 1000, Math.random() * 2000 - 1000, Math.random() * 2000 - 1000 );
+			geometry.vertices.push(vector);
+		}
+
+		var sprite1 = ImageUtils.loadTexture( "assets/images/snowflake1.png" );
+		
+		var color  = [1.0, 0.2, 1.0];
+		var sprite = sprite1;
+		var size   = 20;
+		
+		var material = new PointCloudMaterial( { size: size, map: sprite } );
+
+		var particles = new PointCloud( geometry, material );
+		particles.rotation.x = Math.random() * 6;
+		particles.rotation.y = Math.random() * 6;
+		particles.rotation.z = Math.random() * 6;
+		scene.add( particles );
 		
         Browser.document.addEventListener('mousemove', function(event) {
             event.preventDefault();
@@ -104,10 +126,6 @@ class Main {
         var timer = new haxe.Timer(std.Math.round(1000/60));
         timer.run = function() {
             theta += 0.2;
-			
-            camera.position.x = radius * std.Math.sin(theta * std.Math.PI / 360);
-            camera.position.y = radius * std.Math.sin(theta * std.Math.PI / 360);
-            camera.position.z = radius * std.Math.cos(theta * std.Math.PI / 360);
 			
             camera.lookAt(scene.position);
 			
@@ -137,5 +155,5 @@ class Main {
             renderer.render(scene, camera);
             stats.update();
         }
-    }
+	}
 }
