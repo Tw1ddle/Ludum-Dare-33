@@ -1,5 +1,6 @@
-package source;
+package;
 
+import dat.*;
 import js.Browser;
 import js.three.*;
 
@@ -7,6 +8,8 @@ class Main
 {
     public static function main()
     {
+		var gui = new GUI( { autoPlace:true } );
+		
         var container, stats;
         var camera, scene, projector, renderer;
         var mouse = { x: 0.0, y: 0.0 };

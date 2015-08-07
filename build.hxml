@@ -1,5 +1,4 @@
-#TODO
--main source.Main
+-main Main
 
 -lib threejs
 -lib actuate
