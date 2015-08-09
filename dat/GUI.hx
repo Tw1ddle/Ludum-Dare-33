@@ -3,7 +3,8 @@ package dat;
 extern class GUI {
 	// GUI
 	public function new(?params:Dynamic):Void;
-	@:overload(function(object:Dynamic, property:Dynamic, min:Float, max:Float):GUI{})
+	@:overload(function(object:Dynamic, property:Dynamic, min:Float, max:Float):GUI { } )
+	@:overload(function(object:Dynamic, property:Dynamic, min:Float, max:Float, step:Float):GUI{})
 	@:overload(function(object:Dynamic, property:Dynamic, ?args:Dynamic):GUI{})
 	public function add(object:Dynamic, property:Dynamic, ?args:Array<Dynamic>):GUI;
 	public function addColor(object:Dynamic, property:Dynamic):GUI;
@@ -21,7 +22,6 @@ extern class GUI {
 	public function saveAs(presetName:String):GUI;
 	public function revert(gui:GUI):GUI;
 	public function listen(?controller:Dynamic):GUI;
-	public function name(name:String):GUI;
 	
 	// FunctionController
 	public function fire():GUI;

@@ -27,7 +27,7 @@ class NightSky {
 		for (i in 0...numStars) {
 			// TODO Place stars according to a nice night sky distribution
 			// Stars using http://mathworld.wolfram.com/DiskPointPicking.html with density function for semicircle cutoff effect
-			var vector = new Vector3(Math.random() * 2000 - 1000, Math.random() * 2000 - 1000, Math.random() * 2000 - 1000);
+			var vector = new Vector3(Math.random() * 1000, Math.random() * 1000, -1000);
 			geometry.vertices.push(vector);
 		}
 		
@@ -39,9 +39,9 @@ class NightSky {
 		var material = new PointCloudMaterial({ size: size, map: sprite });
 
 		var particles = new PointCloud(geometry, material);
-		particles.rotation.x = Math.random() * 6;
-		particles.rotation.y = Math.random() * 6;
-		particles.rotation.z = Math.random() * 6;
+		//particles.rotation.x = Math.random() * 6;
+		//particles.rotation.y = Math.random() * 6;
+		//particles.rotation.z = Math.random() * 6;
 		scene.add(particles);
 	}
 	
