@@ -8,7 +8,7 @@ Play it [here](TODO) or visit the Ludum Dare [submission page](TODO).
 
 This project is written in [Haxe](http://haxe.org/ and targets HTML5. The graphical style is inspired by the [Mushishi](https://en.wikipedia.org/wiki/Mushishi) manga and Ludum Dare 29 entry Beneath The Cave by [feiss](http://ludumdare.com/compo/author/feiss/).
 	
-This was made using Yaroslav Sivakov's [three.js](http://lib.haxe.org/u/yar3333/) externs for rendering and Joshua Granick's [actuate](http://lib.haxe.org/p/actuate) tweening library. It requires a modern browser with WebGL support.
+This was made using Yaroslav Sivakov's [three.js](http://lib.haxe.org/u/yar3333/) externs for rendering, Joshua Granick's [actuate](http://lib.haxe.org/p/actuate) tweening library and the [msignal](http://lib.haxe.org/p/msignal/) signals library. It requires a modern browser with WebGL support.
 	
 ### Screenshots ###
 
