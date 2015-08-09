@@ -3,6 +3,7 @@ package;
 import dat.GUI;
 import js.Browser;
 import js.three.Color;
+import js.three.ImageUtils;
 import js.three.Mesh;
 import js.three.MeshBasicMaterial;
 import js.three.Object3D;
@@ -12,10 +13,13 @@ import js.three.PlaneGeometry;
 import js.three.Projector;
 import js.three.Raycaster;
 import js.three.Scene;
+import js.three.Three;
 import js.three.utils.Stats;
 import js.three.Vector2;
 import js.three.Vector3;
 import js.three.WebGLRenderer;
+import js.three.Mapping;
+import js.three.Mappings;
 import ludum.NightSky;
 import ludum.Player;
 import WebGLDetector;
@@ -56,8 +60,6 @@ class Main {
 	
 	public var renderer(default, null):WebGLRenderer;
 	
-	public var gameDiv(default, null):Dynamic;
-	
 	public var intersectedObject(default, null):Dynamic = null;
 	private var intersectables:Array<Object3D> = new Array<Object3D>();
 	private var projector:Projector = new Projector();
@@ -79,7 +81,7 @@ class Main {
 	public inline function onWindowLoaded():Void {
 		// Attach game div
 		var gameAttachPoint = Browser.document.getElementById("game");		
-		gameDiv = Browser.document.createElement("attach");
+		var gameDiv = Browser.document.createElement("attach");
 		gameAttachPoint.appendChild(gameDiv);
 		
 		// WebGL support check
@@ -110,16 +112,10 @@ class Main {
         renderer.sortObjects = false;
 		renderer.autoClear = false;
         renderer.setSize(GAME_VIEWPORT_WIDTH, GAME_VIEWPORT_HEIGHT);
-		renderer.setClearColor(new Color(0, 255, 0));
-		
-		// TODO setup player
-		player = new Player(10, 30);
-		player.position.set(0, -GAME_VIEWPORT_HEIGHT / 2 + 50, -1417);
-		worldScene.add(player);
+		renderer.setClearColor(new Color(0, 0, 0));
 		
 		// Setup cameras
         worldCamera = new PerspectiveCamera(20, GAME_VIEWPORT_WIDTH / GAME_VIEWPORT_HEIGHT, 1, 200000);
-        worldCamera.position.set(player.position.x, worldCamera.position.y, worldCamera.position.z);
 		worldCameraFollowPoint.set(worldCamera.position.x, worldCamera.position.y, worldCamera.position.z);
 		
 		uiCamera = new OrthographicCamera(0, GAME_VIEWPORT_WIDTH, 0, GAME_VIEWPORT_HEIGHT, -1, 1);
@@ -130,9 +126,23 @@ class Main {
 		
 		// TODO Populate the screens
 		
+		var groundMaterial = new MeshBasicMaterial( { map: ImageUtils.loadTexture('assets/images/ground1.png', Mappings.UVMapping()), transparent:true, depthWrite: false, depthTest: false /*,opacity:1.0*/ } );
+		var geometry = new PlaneGeometry(GAME_VIEWPORT_WIDTH, 200);
+		var mesh = new Mesh(geometry, groundMaterial);
+		mesh.position.set(0, -GAME_VIEWPORT_HEIGHT / 2 + 100, -1410);
+		worldScene.add(mesh);
+		
 		// Sky
+		// Sky renders after ground to avoid transparency rendering order issues
 		NightSky.makeStars(worldScene);
 		NightSky.makeComets(worldScene);
+		
+		player = new Player(10, 30);
+		player.position.set(0, -GAME_VIEWPORT_HEIGHT / 2 + 100 + 30, -1417);
+		worldScene.add(player);
+		
+		// Camera follows player
+		worldCamera.position.set(player.position.x, worldCamera.position.y, worldCamera.position.z);
 		
 		// TODO setup particle systems
 		
@@ -180,9 +190,15 @@ class Main {
 		setupGUI();
 		#end
 		
+		player.signal_PositionChanged.add(onPlayerMoved);
+		
 		// Present game and start animation loop
 		gameDiv.appendChild(renderer.domElement);
 		Browser.window.requestAnimationFrame(animate);
+	}
+	
+	private var lastPosition:Vector3 = new Vector3();
+	public function onPlayerMoved(position:Vector3):Void {
 	}
 	
 	private function animate(time:Float):Void {
@@ -217,7 +233,8 @@ class Main {
 		// Update entities
 		player.update(dt);
 		
-		Actuate.tween(worldCameraFollowPoint, 1, { x: player.position.x } );
+		// Actuate.tween(worldCameraFollowPoint, 1, { x: player.position.x } );
+		//worldCameraFollowPoint.x = player.position.x;
 		// Actuate.tween(worldCameraFollowPoint, 1, { y: player.position.y } );
 		
 		worldCamera.position.set(worldCameraFollowPoint.x, worldCameraFollowPoint.y, worldCamera.position.z);
@@ -271,7 +288,7 @@ class Main {
 	private inline function setupStats():Void {
 		stats.domElement.style.position = 'absolute';
 		stats.domElement.style.top = '0px';
-		gameDiv.appendChild(stats.domElement);
+		Browser.window.document.body.appendChild(stats.domElement);
 	}
 	
 	private inline function setupGUI():Void {
@@ -300,7 +317,7 @@ class Main {
 		if (Std.is(object, Object3D)) {
 			folder.add(object.position, 'x', -5000.0, 5000.0, 2).listen();
 			folder.add(object.position, 'y', -5000.0, 5000.0, 2).listen();
-			folder.add(object.position, 'z', 0.0, 20000.0, 2).listen();
+			folder.add(object.position, 'z', -20000.0, 20000.0, 2).listen();
 
 			folder.add(object.rotation, 'x', 0.0, Math.PI * 2, 0.1).listen();
 			folder.add(object.rotation, 'y', 0.0, Math.PI * 2, 0.1).listen();

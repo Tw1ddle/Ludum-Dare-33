@@ -6,8 +6,12 @@ import js.three.Mesh;
 import js.three.MeshBasicMaterial;
 import js.three.PlaneGeometry;
 import js.three.Vector2;
+import js.three.Vector3;
+import msignal.Signal;
 
 class Player extends Mesh {
+	public var signal_PositionChanged(default, null) = new Signal1<Vector3>();
+	
 	private static inline var baseVelocity:Float = 200; // Pixels per second
 	private var velocity = new Vector2();
 	
@@ -47,8 +51,12 @@ class Player extends Mesh {
 		}, false);
 	}
 	
-	public function update(dt:Float):Void {
+	public function update(dt:Float):Void {		
 		position.x += velocity.x * dt;
 		position.y += velocity.y * dt;
+		
+		if(velocity.x != 0 || velocity.y != 0) {
+			signal_PositionChanged.dispatch(position);
+		}
 	}
 }
