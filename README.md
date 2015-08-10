@@ -1,12 +1,12 @@
 # Otherworldly Stars
 
-Base code for my entry for Ludum Dare 33, the 48 hour game jam.
+Base code for my entry for Ludum Dare 33, the world's largest online game jam.
 
 Play it [here](TODO) or visit the Ludum Dare [submission page](TODO).
 
 ### About ###
 
-A HTML5/WebGL game with a graphical style inspired by the Ludum Dare 29 entry Beneath The Cave by [feiss](http://ludumdare.com/compo/author/feiss/) and the [Mushishi](https://en.wikipedia.org/wiki/Mushishi) manga. It requires a modern browser with WebGL support to run.
+A HTML5/WebGL Ludum Dare game with a graphical style inspired by the Ludum Dare 29 entry Beneath The Cave by [feiss](http://ludumdare.com/compo/author/feiss/), Alto's Adventure by [Snowman](https://itunes.apple.com/gb/app/altos-adventure/id950812012), and the [Mushishi](https://en.wikipedia.org/wiki/Mushishi) manga. It requires a modern browser with WebGL support to run.
 
 ### Screenshots ###
 
@@ -15,12 +15,16 @@ A HTML5/WebGL game with a graphical style inspired by the Ludum Dare 29 entry Be
 ![Screenshot2](https://github.com/Tw1ddle/ludum-dare-33/blob/master/screenshots/screenshot2.png?raw=true "Screenshot 2")
 
 ![Screenshot3](https://github.com/Tw1ddle/ludum-dare-33/blob/master/screenshots/screenshot3.png?raw=true "Screenshot 3")
-	
+
+### Dev Log
+
+7-10th August 2015: Created boilerplate base code.
+
 ### Credits
 
-This project is written in [Haxe](http://haxe.org/.
+This project is written in the [Haxe](http://haxe.org/) programming language.
 
-This was made using:
+The game was made using:
 * [three.js](https://github.com/mrdoob/three.js) for rendering.
 * Yaroslav Sivakov's [three.js](http://lib.haxe.org/u/yar3333/) externs.
 * Joshua Granick's [actuate](http://lib.haxe.org/p/actuate) tweening library.
