@@ -21,7 +21,8 @@ A HTML5/WebGL game with a graphical style inspired by the Ludum Dare 29 entry Be
 This project is written in [Haxe](http://haxe.org/.
 
 This was made using:
-* Yaroslav Sivakov's [three.js](http://lib.haxe.org/u/yar3333/) externs for rendering.
+* [three.js](https://github.com/mrdoob/three.js) for rendering.
+* Yaroslav Sivakov's [three.js](http://lib.haxe.org/u/yar3333/) externs.
 * Joshua Granick's [actuate](http://lib.haxe.org/p/actuate) tweening library.
 * Luke Moody's [ShaderParticleEngine](https://github.com/squarefeet/ShaderParticleEngine) particle engine and editor for three.js.
 * Massive Interactive's [msignal](http://lib.haxe.org/p/msignal/) signals library.
