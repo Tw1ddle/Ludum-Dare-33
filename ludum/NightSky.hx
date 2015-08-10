@@ -1,12 +1,11 @@
 package ludum;
 
-import js.three.Scene;
 import js.three.Geometry;
-import js.three.Vector3;
 import js.three.ImageUtils;
-import js.three.PointCloudMaterial;
 import js.three.PointCloud;
-
+import js.three.PointCloudMaterial;
+import js.three.Scene;
+import js.three.Vector3;
 import ludum.NightSky.Rect;
 
 typedef Rect = {
@@ -43,6 +42,8 @@ class NightSky {
 		
 		scene.add(particles);
 	}
+	
+	// TODO make a layer of stars that can be used to form text
 	
 	public static inline function makeComets(scene:Scene):Void {
 		
