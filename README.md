@@ -22,9 +22,8 @@ A HTML5/WebGL Ludum Dare game with a graphical style inspired by the Ludum Dare 
 
 ### Credits
 
-This project is written in the [Haxe](http://haxe.org/) programming language.
+This project is written in the [Haxe](http://haxe.org/) programming language and uses:
 
-The game was made using:
 * [three.js](https://github.com/mrdoob/three.js) for rendering.
 * Yaroslav Sivakov's [three.js](http://lib.haxe.org/u/yar3333/) externs.
 * Joshua Granick's [actuate](http://lib.haxe.org/p/actuate) tweening library.

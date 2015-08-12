@@ -24,7 +24,7 @@ class NightSky {
 	public static inline function makeStars(scene:Scene, numStars:Int = 1000):Void {
 		var geometry = new Geometry();
 		
-		var rect:Rect = { left: Std.int(-Main.GAME_VIEWPORT_WIDTH / 2) * 10, right: Std.int(Main.GAME_VIEWPORT_WIDTH / 2) * 10, top: Std.int(-Main.GAME_VIEWPORT_HEIGHT / 2) * 10, bottom: Std.int(Main.GAME_VIEWPORT_HEIGHT / 2) * 10 };
+		var rect:Rect = { left: Std.int(-Main.GAME_VIEWPORT_WIDTH / 2) * 20, right: Std.int(Main.GAME_VIEWPORT_WIDTH / 2) * 20, top: Std.int(-Main.GAME_VIEWPORT_HEIGHT / 2) * 10, bottom: Std.int(Main.GAME_VIEWPORT_HEIGHT / 2) * 10 };
 		
 		for (i in 0...numStars) {
 			var cutoff = randomFloat(rect.bottom, rect.top * Math.random());
