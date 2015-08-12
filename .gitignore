@@ -3,6 +3,11 @@
 !dat.gui.js
 !webgldetector.js
 !shaderparticles.js
+!three.min.js
+!dat.gui.min.js
+!webgldetector.min.js
+!shaderparticles.min.js
+!script.min.js
 .DS_Store
 .DS_Store?
 .Trashes

@@ -1,6 +1,8 @@
 package ludum.screens;
 
 class Screen {
+	private var enemies = new List<Enemy>();
+	
 	public function new() {
 		
 	}
@@ -14,6 +16,8 @@ class Screen {
 	}
 	
 	public function update(dt:Float):Void {
-		
+		for (enemy in enemies) {
+			enemy.update(dt);
+		}
 	}
 }
