@@ -1,5 +1,6 @@
 package external.dat;
 
+@:native("dat.GUI")
 extern class GUI {
 	// GUI
 	public function new(?params:Dynamic):Void;
