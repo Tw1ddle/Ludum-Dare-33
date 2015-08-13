@@ -1,4 +1,4 @@
-package dat;
+package external.dat;
 
 extern class GUI {
 	// GUI

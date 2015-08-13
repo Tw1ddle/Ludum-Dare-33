@@ -6,7 +6,6 @@ import js.three.PointCloud;
 import js.three.PointCloudMaterial;
 import js.three.Scene;
 import js.three.Vector3;
-import ludum.NightSky.Rect;
 
 typedef Rect = {
 	var left:Int;

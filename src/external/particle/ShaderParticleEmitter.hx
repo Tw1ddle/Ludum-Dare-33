@@ -1,7 +1,7 @@
-package particle;
+package external.particle;
 
-import js.three.Vector3;
 import js.three.Color;
+import js.three.Vector3;
 
 @:native("SPE.Emitter")
 extern class Emitter {

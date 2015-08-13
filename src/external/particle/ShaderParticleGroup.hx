@@ -1,8 +1,8 @@
-package particle;
+package external.particle;
 
+import external.particle.ShaderParticleEmitter.Emitter;
 import js.three.Mesh;
 import js.three.Vector3;
-import particle.ShaderParticleEmitter;
 
 @:native("SPE.Group")
 extern class Group {

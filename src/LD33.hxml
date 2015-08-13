@@ -4,4 +4,4 @@
 -lib actuate
 -lib msignal
 
--js script.js
+-js ../www/js/game.js

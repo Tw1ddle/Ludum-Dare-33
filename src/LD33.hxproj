@@ -4,7 +4,7 @@
   <output>
     <movie outputType="CustomBuild" />
     <movie input="" />
-    <movie path="script.js" />
+    <movie path="game.js" />
     <movie fps="0" />
     <movie width="0" />
     <movie height="0" />
@@ -46,7 +46,7 @@
   <options>
     <option showHiddenPaths="False" />
     <option testMovie="Custom" />
-    <option testMovieCommand="index.html" />
+    <option testMovieCommand="..\www\index.html" />
   </options>
   <!-- Plugin storage -->
   <storage />
