@@ -1,4 +1,4 @@
-package external.detector;
+package external.webgl;
 
 @:enum abstract WebGLSupport(Int) {
 	var SUPPORTED_AND_ENABLED = 0;
@@ -7,6 +7,6 @@ package external.detector;
 }
 
 @:native("WebGLDetector")
-extern class WebGLDetector {
+extern class Detector {
 	public static function detect():WebGLSupport;
 }

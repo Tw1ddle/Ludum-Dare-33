@@ -1,6 +1,6 @@
 package external.particle;
 
-import external.particle.ShaderParticleEmitter.Emitter;
+import external.particle.Emitter;
 import js.three.Mesh;
 import js.three.Vector3;
 

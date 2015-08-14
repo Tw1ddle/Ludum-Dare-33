@@ -1,0 +1,16 @@
+ideas for shaders and silhouette
+
+refer to mushishi otherworldly stars episode
+altar at the sea
+okami boss darkness transition
+could restore buildings/bring back things by destroying enemies like actraiser with dissolve shader (similar intro too?)
+vignette for health/scene transitions
+
+random ideas
+
+THE WELL AT WORLD'S END?
+refer to architecture
+player can talk to buildings (padding, hold x to talk...)
+on death shoot back through all levels to beginning?
+ending, or infinite/generated levels -> no ending... think battle for wesnoth corrupted wizard/necromancer campaign with groundhog day thing for gameplay too
+"weather" variation for themed/seasonal screens with light/particle effects

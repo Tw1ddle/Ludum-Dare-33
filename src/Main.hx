@@ -1,6 +1,7 @@
 package;
 
 import external.dat.GUI;
+import external.webgl.Detector;
 import js.Browser;
 import js.three.Color;
 import js.three.ImageUtils;
@@ -22,7 +23,6 @@ import js.three.Mapping;
 import js.three.Mappings;
 import ludum.NightSky;
 import ludum.Player;
-import external.detector.WebGLDetector;
 import motion.Actuate;
 import msignal.Signal;
 

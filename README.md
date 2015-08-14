@@ -4,11 +4,11 @@ Base code for my entry for Ludum Dare 33, the world's largest online game jam.
 
 Play it [here](TODO) or visit the Ludum Dare [submission page](TODO).
 
-### About ###
+### About
 
 A HTML5/WebGL Ludum Dare game with a graphical style inspired by the Ludum Dare 29 entry Beneath The Cave by [feiss](http://ludumdare.com/compo/author/feiss/), Alto's Adventure by [Snowman](https://itunes.apple.com/gb/app/altos-adventure/id950812012), and the [Mushishi](https://en.wikipedia.org/wiki/Mushishi) manga. It requires a modern browser with WebGL support to run.
 
-### Screenshots ###
+### Screenshots
 
 ![Screenshot1](https://github.com/Tw1ddle/ludum-dare-33/blob/master/screenshots/screenshot1.png?raw=true "Screenshot 1")
 
@@ -18,7 +18,9 @@ A HTML5/WebGL Ludum Dare game with a graphical style inspired by the Ludum Dare 
 
 ### Dev Log
 
-7-10th August 2015: Created boilerplate base code.
+#### August ####
+7-10th: Created boilerplate base code.
+11th-14th: Reorganize repo for separate debug/release builds.
 
 ### Credits
 
