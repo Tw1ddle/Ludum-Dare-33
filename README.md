@@ -19,12 +19,13 @@ A HTML5/WebGL Ludum Dare game with a graphical style inspired by the Ludum Dare 
 ### Dev Log
 
 #### August ####
-7-10th: Created boilerplate base code.
-11th-14th: Reorganize repo for separate debug/release builds.
+* 7-11th: Created boilerplate base code.
+* 11th-13th: Reorganize repo for separate debug/release builds.
+* 13th-14th: Implement sky shader based off of the [three.js](http://threejs.org/examples/#webgl_shaders_sky) sky example.
 
 ### Credits
 
-This project is written in the [Haxe](http://haxe.org/) programming language and uses:
+This project is written using the [Haxe](http://haxe.org/) programming language and depends on:
 
 * [three.js](https://github.com/mrdoob/three.js) for rendering.
 * Yaroslav Sivakov's [three.js](http://lib.haxe.org/u/yar3333/) externs.

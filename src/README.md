@@ -8,4 +8,6 @@ Manually invoking build using the .hxml files will also work on other platforms.
 
 Running locally in the browser requires the [same origin policy to be disabled](http://stackoverflow.com/questions/3102819/disable-same-origin-policy-in-chrome) so that required assets can be loaded.
 
-Note that debug builds include a debugger UI that may slow things down a lot.
+There are currently issues with particle systems flickering a bit in Google Chrome.
+
+Debug builds include a debugger UI that may slow things down a lot.

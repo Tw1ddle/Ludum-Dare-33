@@ -1,0 +1,12 @@
+varying vec2 vUv;
+
+uniform sampler2D diffuse;
+uniform vec2 offset;
+uniform float lightness;
+
+void main()
+{
+	vec2 uv = offset * (vUv - vec2(0.5));
+	vec4 texel = texture2D(diffuse, vUv);
+	gl_FragColor = vec4(mix(texel.rgb, vec3(lightness), dot(uv, uv)), texel.a);
+}
