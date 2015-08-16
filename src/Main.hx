@@ -79,12 +79,12 @@ class Main {
 	
 	public inline function onWindowLoaded():Void {
 		// Attach game div
-		var gameAttachPoint = Browser.document.getElementById("game");		
+		gameAttachPoint = Browser.document.getElementById("game");		
 		var gameDiv = Browser.document.createElement("attach");
 		gameAttachPoint.appendChild(gameDiv);
 		
 		// WebGL support check
-		var glSupported:WebGLSupport = WebGLDetector.detect();
+		var glSupported:WebGLSupport = Detector.detect();
 		if (glSupported != SUPPORTED_AND_ENABLED) {
 			var unsupportedInfo = Browser.document.createElement('div');
 			unsupportedInfo.style.position = 'absolute';
@@ -107,11 +107,11 @@ class Main {
 		}
 		
 		// Setup WebGL renderer
-        renderer = new WebGLRenderer();
+        renderer = new WebGLRenderer({ antialias: false });
         renderer.sortObjects = false;
 		renderer.autoClear = false;
         renderer.setSize(GAME_VIEWPORT_WIDTH, GAME_VIEWPORT_HEIGHT);
-		renderer.setClearColor(new Color(0, 0, 0));
+		renderer.setClearColor(new Color(0x222222));
 		
 		// Setup cameras
         worldCamera = new PerspectiveCamera(20, GAME_VIEWPORT_WIDTH / GAME_VIEWPORT_HEIGHT, 1, 200000);
@@ -155,8 +155,13 @@ class Main {
 			}
 			event.preventDefault();
 			
-            mouse.x = (event.clientX / Browser.window.innerWidth) * 2 - 1;
-            mouse.y = - (event.clientY / Browser.window.innerHeight) * 2 + 1;
+			mouse.x = ((event.clientX - gameAttachPoint.offsetLeft) / gameAttachPoint.clientWidth) * 2 - 1;
+			mouse.y = - ((event.clientY - gameAttachPoint.offsetTop) / gameAttachPoint.clientHeight) * 2 + 1;
+			
+			#if debug
+			trace("Mouse position: " + mouse.x + "," + mouse.y);
+			#end
+			
         }, false);
         Browser.document.addEventListener('mouseup', function(event) {
 			if (event.which != 1) {
@@ -164,18 +169,27 @@ class Main {
 			}
 			event.preventDefault();
 			
-            mouse.x = (event.clientX / Browser.window.innerWidth) * 2 - 1;
-            mouse.y = - (event.clientY / Browser.window.innerHeight) * 2 + 1;
+			mouse.x = ((event.clientX - gameAttachPoint.offsetLeft) / gameAttachPoint.clientWidth) * 2 - 1;
+			mouse.y = - ((event.clientY - gameAttachPoint.offsetTop) / gameAttachPoint.clientHeight) * 2 + 1;
+			
         }, false);
         Browser.document.addEventListener('mousemove', function(event) {
             event.preventDefault();
 			
-            mouse.x = (event.clientX / Browser.window.innerWidth) * 2 - 1;
-            mouse.y = - (event.clientY / Browser.window.innerHeight) * 2 + 1;
+			mouse.x = ((event.clientX - gameAttachPoint.offsetLeft) / gameAttachPoint.clientWidth) * 2 - 1;
+			mouse.y = - ((event.clientY - gameAttachPoint.offsetTop) / gameAttachPoint.clientHeight) * 2 + 1;
+			
+        }, false);
         }, false);
 		
 		// Disable context menu opening
 		Browser.document.addEventListener('contextmenu', function(event) {
+			event.preventDefault();
+		}, false);
+		
+		// Disable page scrolling with keys etc
+		Browser.document.addEventListener('DOMMouseScroll', function(event) {
+			// TODO disable scroll bar movement events
 			event.preventDefault();
 		}, false);
 		

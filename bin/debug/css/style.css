@@ -1,11 +1,12 @@
 .centered {
-    position: absolute;    
+    position: fixed;    
     width: 800px;
     height: 500px;
     left: 50%;
     top: 50%;
     margin-left: -400px;
     margin-top: -250px;
+    padding: 0;
 }
 
 body {
