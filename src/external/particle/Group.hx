@@ -14,5 +14,5 @@ extern class Group {
 	function releaseIntoPool(emitter:Emitter):Group;
 	function addPool(numEmitters:Float, emitterSettings:Dynamic, createNew:Bool):Group;
 	function triggerPoolEmitter(numEmitters:Float, position:Vector3):Group;
-	function tick(dt:Float):Dynamic;
+	function tick(?dt:Float):Dynamic;
 }
