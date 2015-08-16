@@ -21,7 +21,6 @@ import js.three.Vector3;
 import js.three.WebGLRenderer;
 import js.three.Mapping;
 import js.three.Mappings;
-import ludum.NightSky;
 import ludum.Player;
 import motion.Actuate;
 import msignal.Signal;
@@ -132,10 +131,6 @@ class Main {
 		mesh.position.set(0, -GAME_VIEWPORT_HEIGHT / 2 + 100, -1410);
 		worldScene.add(mesh);
 		
-		// Sky
-		// Sky renders after ground to avoid transparency rendering order issues
-		NightSky.makeStars(worldScene);
-		NightSky.makeComets(worldScene);
 		
 		player = new Player(10, 30);
 		player.position.set(0, -GAME_VIEWPORT_HEIGHT / 2 + 100 + 30, -1417);
