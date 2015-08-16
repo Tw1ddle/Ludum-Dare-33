@@ -6,24 +6,24 @@ import util.FileReader;
 
 class SkyShader {	
 	public static var uniforms = {
-		luminance: { type: "f", value:0.0 },
-		turbidity: { type: "f", value:0.0 },
-		rayleigh: { type: "f", value:0.0 },
-		mieCoefficient: { type: "f", value:0.0 },
-		mieDirectionalG: { type: "f", value:0.0 },
+		luminance: { type: "f", value:1.0 },
+		turbidity: { type: "f", value:1.0 },
+		rayleigh: { type: "f", value:1.0 },
+		mieCoefficient: { type: "f", value:1.0 },
+		mieDirectionalG: { type: "f", value:1.0 },
 		sunPosition: { type: "v3", value: new Vector3() },
 		cameraPos: { type: "v3", value: new Vector3() },
-		refractiveIndex: { type: "f", value:0.0 },
-		numMolecules: { type: "f", value:0.0 },
-		depolarizationFactor: { type: "f", value:0.0 },
+		refractiveIndex: { type: "f", value:1.0 },
+		numMolecules: { type: "f", value:1.0 },
+		depolarizationFactor: { type: "f", value:1.0 },
 		primaries: { type: "v3", value: new Vector3() },
 		mieKCoefficient: { type: "v3", value: new Vector3() },
-		mieV: { type: "f", value:0.0 },
-		rayleighZenithLength: { type: "f", value:0.0 },
-		mieZenithLength: { type: "f", value:0.0 },
-		sunIntensityFactor: { type: "f", value:0.0 },
-		sunIntensityFalloffSteepness: { type: "f", value:0.0 },
-		sunAngularDiameterDegrees: { type: "f", value:0.0 },
+		mieV: { type: "f", value:1.0 },
+		rayleighZenithLength: { type: "f", value:1.0 },
+		mieZenithLength: { type: "f", value:1.0 },
+		sunIntensityFactor: { type: "f", value:1.0 },
+		sunIntensityFalloffSteepness: { type: "f", value:1.0 },
+		sunAngularDiameterDegrees: { type: "f", value:1.0 },
 	};
 	
 	public static var vertexShader = FileReader.readFile("shaders/glsl/sky.vertex");
