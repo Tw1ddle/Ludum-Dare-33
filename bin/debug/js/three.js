@@ -4390,7 +4390,7 @@ THREE.Matrix3.prototype = {
 
 			} else {
 
-				THREE.warn( msg );
+				//THREE.warn( msg );
 
 			}
 
