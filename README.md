@@ -1,12 +1,12 @@
 # Otherworldly Stars
 
-Base code for my entry for Ludum Dare 33, the world's largest online game jam.
+My entry for Ludum Dare 33, the world's largest online game jam.
 
-Play it [here](TODO) or visit the Ludum Dare [submission page](TODO).
+Play it [here](TODO) and visit the Ludum Dare [submission page](TODO).
 
 ### About
 
-A HTML5/WebGL Ludum Dare game with a graphical style inspired by the Ludum Dare 29 entry Beneath The Cave by [feiss](http://ludumdare.com/compo/author/feiss/) and Alto's Adventure by [Snowman](https://itunes.apple.com/gb/app/altos-adventure/id950812012). It requires a modern browser with WebGL support to run.
+Otherworldly Stars is a HTML5/WebGL game and has a graphical style inspired by the Ludum Dare 29 entry Beneath The Cave by [feiss](http://ludumdare.com/compo/author/feiss/) and Alto's Adventure by [Snowman](https://itunes.apple.com/gb/app/altos-adventure/id950812012). It requires a recent graphics card and modern browser with WebGL support to run.
 
 ### Screenshots
 
@@ -19,10 +19,14 @@ A HTML5/WebGL Ludum Dare game with a graphical style inspired by the Ludum Dare 
 ### Dev Log
 
 #### August ####
-* 7-11th: Created boilerplate base code.
+* 7th-11th: Created boilerplate base code.
 * 11th-13th: Reorganize repo for separate debug/release builds.
 * 13th-14th: Implement sky shader based off of the [three.js](http://threejs.org/examples/#webgl_shaders_sky) sky example.
-* 15-16th: Implement tweenable text.
+* 15th-16th: Implement tweenable text.
+* 16th-21st: Holiday!
+* 22nd-24th: The Compo.
+
+See the [writeup](TODO) postmortem dev log.
 
 ### Credits
 

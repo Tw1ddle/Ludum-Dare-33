@@ -138,17 +138,17 @@ class SkyEffectController {
 		gui.add(controller, "rayleigh").step(0.005).listen().onChange(updateValues);
 		gui.add(controller, "mieCoefficient").step(0.000025).listen().onChange(updateValues);
 		gui.add(controller, "mieDirectionalG").step(0.001).listen().onChange(updateValues);
-		gui.add(controller, "luminance").step(0.0001).listen().onChange(updateValues);
+		gui.add(controller, "luminance").step(0.0005).listen().onChange(updateValues);
 		gui.add(controller, "inclination").step(0.0001).listen().onChange(updateValues);
 		gui.add(controller, "azimuth").step(0.0001).listen().onChange(updateValues);
 		
 		gui.add(controller, "refractiveIndex").step(0.000001).listen().onChange(updateValues);
 		gui.add(controller, "numMolecules", 2.542e10, 2.542e26, 1e10).listen().onChange(updateValues);
-		gui.add(controller, "depolarizationFactor").step(0.0001).listen().onChange(updateValues);
+		gui.add(controller, "depolarizationFactor").step(0.001).listen().onChange(updateValues);
 		
 		gui.add(controller, "rayleighZenithLength").step(15.0).listen().onChange(updateValues);
 		gui.add(controller, "mieV").step(0.001).listen().onChange(updateValues);
-		gui.add(controller, "mieZenithLength").step(1.0).listen().onChange(updateValues);
+		gui.add(controller, "mieZenithLength").step(100.0).listen().onChange(updateValues);
 		gui.add(controller, "sunIntensityFactor").step(1.0).listen().onChange(updateValues);
 		gui.add(controller, "sunIntensityFalloffSteepness").step(0.01).listen().onChange(updateValues);
 		gui.add(controller, "sunAngularDiameterDegrees").step(0.00001).listen().onChange(updateValues);
