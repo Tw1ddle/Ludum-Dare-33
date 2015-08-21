@@ -16,3 +16,15 @@ body {
 header {
 	background-color: #030408;
 }
+
+a:hover, a:visited, a:link, a:active {
+	text-decoration: none;
+}
+
+a:link, a:visited, a:active {
+	color: #444444;
+}
+
+a:hover {
+	color: #777777;
+}
