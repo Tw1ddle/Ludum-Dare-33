@@ -1,10 +1,13 @@
 package ludum;
 
+import js.three.BoundingBox;
+import js.three.Box3;
 import js.three.Mesh;
 import js.three.MeshBasicMaterial;
 import js.three.Object3D;
 import js.three.TextGeometry;
 import msignal.Signal;
+import motion.Actuate;
 
 class CinematicText extends Object3D {
 	private var letters:Array<Mesh> = new Array<Mesh>();
@@ -26,12 +29,12 @@ class CinematicText extends Object3D {
 				size: 80,
 				height: 20,
 				curveSegments: 2,
-				font: "helvetiker"
+				font: "absender"
 			});
 			
 			var mesh = new Mesh(geometry, material);
 			
-			mesh.visible = false;
+			//mesh.visible = false;
 			
 			letters.push(mesh);
 			add(mesh);
@@ -41,12 +44,22 @@ class CinematicText extends Object3D {
 		for (letter in letters) {
 			letter.position.x = x;
 			x += 60;
-		}
+		}		
 	}
 	
 	public function tween():Void {
-		for (letter in letters) {
-			
+		for (i in 0...letters.length) {
+			Actuate.tween(letters[i], 3, { alpha: 1 } ).onUpdate(function(v:Dynamic) {
+				
+			}).delay(i * 0.25);
 		}
+	}
+	
+	public function update(dt:Float):Void {
+		
+	}
+	
+	public inline function computeBoundingBox():Box3 {
+		return new Box3().setFromObject(this);
 	}
 }
