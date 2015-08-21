@@ -8,6 +8,7 @@ import js.three.Object3D;
 import js.three.TextGeometry;
 import msignal.Signal;
 import motion.Actuate;
+import motion.easing.*;
 
 class CinematicText extends Object3D {
 	private var letters:Array<Mesh> = new Array<Mesh>();
@@ -21,12 +22,12 @@ class CinematicText extends Object3D {
 		#end
 	}
 	
-	public function init(message:String):Void {
-		var material = new MeshBasicMaterial( { color: 0xAA55AA, overdraw: 0.5 } );
-		
+	public function init(message:String):Void {		
 		for (i in 0...message.length) {
+			var material = new MeshBasicMaterial( { color: 0x202020, overdraw: 0.5, transparent: true, opacity: 1.0 } );
+			
 			var geometry = new TextGeometry(message.charAt(i), {
-				size: 80,
+				size: 24,
 				height: 20,
 				curveSegments: 2,
 				font: "absender"
@@ -43,15 +44,32 @@ class CinematicText extends Object3D {
 		var x:Int = 0;
 		for (letter in letters) {
 			letter.position.x = x;
-			x += 60;
-		}		
+			letter.scale.z = 0.0;
+			letter.material.opacity = 0.0;
+			x += 18;
+		}
 	}
 	
-	public function tween():Void {
+	public function tween(?onTweenInComplete:Void->Void = null, ?onTweenOutComplete:Void->Void = null):Void {
+		var tweenDuration:Float = letters.length * 0.15; // 0.15 seconds per letter in the text
+		
 		for (i in 0...letters.length) {
-			Actuate.tween(letters[i], 3, { alpha: 1 } ).onUpdate(function(v:Dynamic) {
+			// Tween down and across slightly
+			Actuate.tween(letters[i].position, tweenDuration, { x: letters[i].position.x - 300, y: letters[i].position.y + 30 } ).delay(i * 0.1).ease(Sine.easeInOut);
+			
+			// Tween alpha in, and on complete fade and move out again
+			Actuate.tween(letters[i].material, tweenDuration, { opacity: 1 } ).onComplete(function(v:Dynamic) {
+					if (i == letters.length - 1 && onTweenInComplete != null) {
+						onTweenInComplete();
+					}
 				
-			}).delay(i * 0.25);
+				Actuate.tween(letters[i].material, tweenDuration, { opacity: 0 } );
+				Actuate.tween(letters[i].position, tweenDuration, { x: letters[i].position.x - 300, y: letters[i].position.y + 30 } ).ease(Sine.easeInOut).onComplete(function(v:Dynamic) {
+					if (i == letters.length - 1 && onTweenOutComplete != null) {
+						onTweenOutComplete();
+					}
+				});
+			}).delay(i * 0.1);
 		}
 	}
 	
