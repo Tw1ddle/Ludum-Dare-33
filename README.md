@@ -26,7 +26,7 @@ Otherworldly Stars is a HTML5/WebGL game and has a graphical style inspired by t
 * 16th-21st: Holiday!
 * 22nd-24th: The Compo.
 
-See the [writeup](TODO) postmortem dev log.
+See the [writeup](http://samcodes.co.uk/ludum-dare-33-dev-log/) postmortem blog.
 
 ### Credits
 

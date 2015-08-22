@@ -26,11 +26,21 @@ class Screen {
 		firstExit = true;
 	}
 	
+	public function skyEnterTransition() {
+		
+	}
+	
+	public function permitsTransition(next:Screen):Bool {
+		return true;
+	}
+	
 	public function onEnter() {
 		if (firstEnter) {
 			onFirstEnter();
 			firstEnter = false;
 		}
+		
+		skyEnterTransition();
 		
 		#if debug
 		trace("Entering screen " + Std.string(index));
@@ -53,7 +63,7 @@ class Screen {
 		trace("Entering screen " + Std.string(index) + " for first time");
 		#end
 		
-		game.player.baseVelocity += 45;
+		game.player.baseVelocity += 15;
 	}
 	
 	public function onFirstExit() {

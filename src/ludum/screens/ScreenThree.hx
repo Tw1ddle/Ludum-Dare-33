@@ -16,7 +16,11 @@ class ScreenThree extends Screen {
 	
 	override public function onFirstExit() {
 		super.onFirstExit();
-	}	
+	}
+	
+	override public function skyEnterTransition() {
+		super.skyEnterTransition();
+	}
 	
 	override public function onEnter() {
 		super.onEnter();

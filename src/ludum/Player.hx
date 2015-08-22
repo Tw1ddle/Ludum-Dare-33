@@ -4,6 +4,7 @@ import external.particle.Emitter;
 import external.particle.Group;
 import js.Browser;
 import js.three.ImageUtils;
+import js.three.Mesh;
 import js.three.Object3D;
 import js.three.Scene;
 import js.three.Vector2;
@@ -12,7 +13,7 @@ import motion.Actuate;
 import motion.easing.Quad;
 import msignal.Signal;
 
-class Player extends Object3D {	
+class Player extends Mesh {	
 	public var signal_PositionChanged(default, null) = new Signal1<Vector3>();
 	public var signal_Died = new Signal0();
 	
@@ -27,7 +28,7 @@ class Player extends Object3D {
 	public var blastParticleGroup(default, null):Group;
 	public var blastParticleEmitter(default, null):Emitter;
 	
-	public var inputEnabled:Bool = true;
+	public var inputEnabled(default, set):Bool = true;
 	
 	public function new(scene:Scene, x:Float, y:Float, width:Float, height:Float) {
 		super();
@@ -175,5 +176,13 @@ class Player extends Object3D {
 		}
 		
 		return message;
+	}
+	
+	public function set_inputEnabled(enabled:Bool):Bool {
+		inputEnabled = enabled;
+		
+		velocity.set(0, 0);
+		
+		return inputEnabled;
 	}
 }

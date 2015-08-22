@@ -68,7 +68,7 @@ class Main {
 
 	private var gameAttachPoint:Dynamic;
 	private var renderer:WebGLRenderer;
-	private var skyEffectController:SkyEffectController = new SkyEffectController();
+	public var skyEffectController(default, null):SkyEffectController = new SkyEffectController();
 	
 	private var gameText:Dynamic = null;
 	
@@ -84,6 +84,10 @@ class Main {
 	public var signal_playerClicked(default, null) = new Signal2<Float, Float>();
 	private var titleText:CinematicText = new CinematicText();
 	private var subtitleText:CinematicText = new CinematicText();
+	private var charredLandsText:CinematicText = new CinematicText();
+	private var parchedWastesText:CinematicText = new CinematicText();
+	private var seaOfStarsText:CinematicText = new CinematicText();
+	
 	private var lastPlayerPosition:Vector3 = new Vector3();
 	
 	private var screenZero:ScreenZero;
@@ -222,21 +226,88 @@ class Main {
 		screenZero = new ScreenZero(this, new Vector2(0, 0));
 		screenOne = new ScreenOne(this, new Vector2(1, 0));
 		screenTwo = new ScreenTwo(this, new Vector2(2, 0));
-		screenThree = new ScreenThree(this, new Vector2(3, 0));
-		screenFour = new ScreenFour(this, new Vector2(4, 0));
 		
 		screens.push(screenZero);
 		screens.push(screenOne);
 		screens.push(screenTwo);
+		
+		var narrative:Array<String> = [ 
+			"I must find my disciples...",
+			"Perhaps they have forgotten me...",
+			"...",
+			"......",
+			"Scouring the charred lands...",
+			"I began to wonder ...",
+			"...",
+			"I wandered through day...", // 8
+			"...",
+			"...",
+			"...",
+			"...",
+			"And night...", // 13
+			"...",
+			"...",
+			"The stars wheeled overhead...", // 16
+			"...",
+			"As I hastened, even the winds bore against me...", // 18
+			"...",
+			"I glinted past the tombs...",
+			"...of heathen...",
+			"...and long dead priests",
+			"...",
+			"...",
+			"...",
+			"...",
+			"...",
+			"...",
+			"Until at long last I came to the parched wastes...", // 29
+			"...",
+			"...",
+			"...",
+			"......",
+			".........",
+			"......",
+			"...",
+			"To come this far and find no one...", // 37
+			"Perhaps my disciples have abandoned me...",
+			"That would be...",
+			"...",
+			"UNACCEPTABLE", // 41
+			"...",
+			"If they have fled across this sea of Otherworldly Stars...", // 43
+			"There shall be no forgiveness",
+			"I shall immolate them all...",
+			"...",
+			"...",
+			"...THEY SHALL BOW BEFORE AGNI, LORD OF FIRE",
+			"...",
+			"..."
+		];
+		
+		for (i in 0...narrative.length) {
+			screens.push(new RandomScreen(this, new Vector2(2 + i, 0), narrative[i]));
+		}
+		
+		screenThree = new ScreenThree(this, new Vector2(53, 0));
+		screenFour = new ScreenFour(this, new Vector2(54, 0));
+		
 		screens.push(screenThree);
 		screens.push(screenFour);
-		screens.push(new RandomScreen(this, new Vector2(5, 0)));
+		screens.push(new RandomScreen(this, new Vector2(55, 0)));
 		
 		// Title/intro text
 		titleText.init("Otherworldly Stars");
 		subtitleText.init("You Are The Monster");
 		worldScene.add(titleText);
 		worldScene.add(subtitleText);
+		
+		// Screen/area intro text
+		charredLandsText.init("The Charred Lands");
+		parchedWastesText.init("The Parched Wastes");
+		seaOfStarsText.init("The Sea Of Stars");
+		worldScene.add(charredLandsText);
+		worldScene.add(parchedWastesText);
+		worldScene.add(seaOfStarsText);
 		
 		// Specify items player can click
 		interactables.push(player);
@@ -426,14 +497,14 @@ class Main {
 			} else {
 				var current:Screen = Screen.findScreen(currentIndex, screens);
 				var next:Screen = Screen.findScreen(nextIndex, screens);
-				signal_screenChangeTrigger.dispatch(current, next);
+				
+				if(current == null || current.permitsTransition(next)) {
+					signal_screenChangeTrigger.dispatch(current, next);
+				}
 			}
 		}
 		
 		lastPlayerPosition.set(position.x, position.y, position.z);
-		titleText.position.x = position.x - titleText.computeBoundingBox().size().x / 2;
-		titleText.position.y = 0;
-		titleText.position.z = position.z;
 	}
 	
 	public function onScreenChange(current:Screen, next:Screen):Void {
@@ -455,18 +526,53 @@ class Main {
 		
 		// Tween the camera to the follow point
 		Actuate.tween(worldCamera.position, 1, { x: worldCameraFollowPoint.x } ).ease(Sine.easeOut);
+	}
+	
+	public function restoreSkyToDefaults(duration:Float = 3, inclination:Float = 0.4983, azimuth:Float = 0.1979):Void {		
+		Actuate.tween(skyEffectController, duration, {
+			turbidity: 4.7,
+			rayleigh: 2.28,
+			mieCoefficient: 0.005,
+			mieDirectionalG: 0.82,
+			luminance: 1.00,
+			inclination: inclination,
+			azimuth: azimuth,
+			refractiveIndex: 1.00029,
+			numMolecules: 2.542e25,
+			depolarizationFactor: 0.02,
+			rayleighZenithLength: 8400,
+			mieV: 3.936,
+			mieZenithLength: 34000,
+			sunIntensityFactor: 1000,
+			sunIntensityFalloffSteepness: 1.5,
+			sunAngularDiameterDegrees: 0.00933
+		}).onUpdate(function() {
+			skyEffectController.updateUniforms();
+		});
 		
-		// moon: turn sun intensity falloff way up and mess with the primaries
+		Actuate.tween(skyEffectController.primaries, duration, {
+			x: 6.8e-7,
+			y: 5.5e-7,
+			z: 4.5e-7
+		}).onUpdate(function() {
+			skyEffectController.updateUniforms();
+		});
 		
-		// snowy emitter
-		// pos 0, 0, -1417
-		// posspread 478, 276, 0
-		// acceleration -9, 5, 63
-		// accelerationspread 7, 4, 0
-		// velocity 17, 0, 0
-		// velocityspread 0, 0, 0
-		// opacity start 0, mid 1, end 0
-		// 3k particles
+		Actuate.tween(skyEffectController.cameraPos, duration, {
+			x: 100000,
+			y: -40000,
+			z: 0
+		}).onUpdate(function() {
+			skyEffectController.updateUniforms();
+		});
+		
+		Actuate.tween(skyEffectController.mieKCoefficient, duration, {
+			x: 0.686,
+			y: 0.678,
+			z: 0.666
+		}).onUpdate(function() {
+			skyEffectController.updateUniforms();
+		});
 	}
 	
 	private function animate(time:Float):Void {

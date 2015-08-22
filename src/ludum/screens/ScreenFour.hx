@@ -16,6 +16,13 @@ class ScreenFour extends Screen {
 		
 		// TODO sequence advanced by clicks:
 		// Each enemy says their stuff and then banishes player
+		visnu = new Enemy(game.worldScene, 0, 0, "God of Earth");
+		varuna = new Enemy(game.worldScene, 0, 0, "God of Water");
+		vayu = new Enemy(game.worldScene, 0, 0, "God of Air");
+	}
+	
+	override public function permitsTransition(next:Screen):Bool {
+		return false;
 	}
 	
 	override public function onFirstEnter() {
@@ -24,7 +31,11 @@ class ScreenFour extends Screen {
 	
 	override public function onFirstExit() {
 		super.onFirstExit();
-	}	
+	}
+
+	override public function skyEnterTransition() {
+		super.skyEnterTransition();
+	}
 	
 	override public function onEnter() {
 		super.onEnter();

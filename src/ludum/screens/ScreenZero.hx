@@ -7,6 +7,7 @@ import js.three.ImageUtils;
 import js.three.Mesh;
 import js.three.Vector2;
 import js.three.Vector3;
+import motion.*;
 
 class ScreenZero extends Screen {	
 	public var starGroup(default, null):Group;
@@ -45,6 +46,31 @@ class ScreenZero extends Screen {
 		game.worldScene.add(loadGround('assets/images/ground0.png', index));
 		game.worldScene.add(loadBuilding('assets/images/temple0.png', index, 80, 118, 100, 110, "Temple of Flame", [ "A charred husk of a temple...", "...", "How was I summoned if this place is abandoned...?", "...", "......", "A worn inscription on the altar reads 'Requiem aeternam dona ei, Varuna'...", "..."]));
 		game.worldScene.add(loadBuilding('assets/images/tomb0.png', index, 280, 118, 100, 110, "Sepulchre of Cinders", [ "A monument dedicated to a God...", "The inscription has worn away.", "...", "I should look around and collect my thoughts...", "..." ]));
+	}
+	
+	override public function skyEnterTransition() {
+		super.skyEnterTransition();
+		
+		Actuate.tween(game.skyEffectController, 3, {
+			turbidity: 4.7,
+			rayleigh: 2.28,
+			mieCoefficient: 0.005,
+			mieDirectionalG: 0.82,
+			luminance: 1.00,
+			inclination: 0.4983,
+			azimuth: 0.1979,
+			refractiveIndex: 1.00029,
+			numMolecules: 2.542e25,
+			depolarizationFactor: 0.02,
+			rayleighZenithLength: 8400,
+			mieV: 3.936,
+			mieZenithLength: 34000,
+			sunIntensityFactor: 1000,
+			sunIntensityFalloffSteepness: 1.5,
+			sunAngularDiameterDegrees: 0.00933
+		}).onUpdate(function() {
+			game.skyEffectController.updateUniforms();
+		});
 	}
 	
 	override public function onEnter() {

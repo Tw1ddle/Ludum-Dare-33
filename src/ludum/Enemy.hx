@@ -4,6 +4,7 @@ import external.particle.Emitter;
 import external.particle.Group;
 import js.Browser;
 import js.three.ImageUtils;
+import js.three.Mesh;
 import js.three.Object3D;
 import js.three.Scene;
 import js.three.Vector2;
@@ -12,7 +13,7 @@ import motion.Actuate;
 import motion.easing.Quad;
 import msignal.Signal;
 
-class Enemy extends Object3D {
+class Enemy extends Mesh implements Describable {
 	public var signal_PositionChanged(default, null) = new Signal1<Vector3>();
 	public var signal_Died(default, null) = new Signal0();
 	
@@ -22,8 +23,13 @@ class Enemy extends Object3D {
 	public var particleGroup(default, null):Group;
 	public var particleEmitter(default, null):Emitter;
 	
-	public function new(scene:Scene, x:Float, y:Float) {
+	public var hoverText(default, null):String;
+	private var clickMessages:Array<String> = new Array<String>();
+	
+	public function new(scene:Scene, x:Float, y:Float, ?hoverText:String = "A vile spirit...") {
 		super();
+		
+		this.hoverText = hoverText;
 		
 		position.set(x, y, -1400);
 		
@@ -35,10 +41,10 @@ class Enemy extends Object3D {
 			acceleration: new Vector3(0, 0, 0),
 			velocity: new Vector3(0, 0, 0),
 			velocitySpread: new Vector3(7, 3, 0),
-			accelerationSpread: new Vector3(7, 10, 0),
-			particleCount: 200,
-			sizeStart: 60,
-			sizeEnd: 80,
+			accelerationSpread: new Vector3(21, 30, 0),
+			particleCount: 700,
+			sizeStart: 42,
+			sizeEnd: 60,
 			opacityStart: 0.9,
 			opacityEnd: 0
 		});
@@ -63,5 +69,17 @@ class Enemy extends Object3D {
 		particleEmitter.position.set(position.x, position.y, position.z);
 		
 		particleGroup.tick(dt);
+	}
+	
+	public function clickText(click:Int):String {
+		if (clickMessages.length == 0) {
+			return hoverText;
+		}
+		
+		if (click > clickMessages.length) {
+			return Player.randomMessage(Std.int(Math.random() * 3));
+		}
+		
+		return clickMessages[Std.int(MathUtils.clamp(click, 0, clickMessages.length - 1))];
 	}
 }
