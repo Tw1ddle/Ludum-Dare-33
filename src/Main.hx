@@ -89,6 +89,7 @@ class Main {
 	private var seaOfStarsText:CinematicText = new CinematicText();
 	
 	private var lastPlayerPosition:Vector3 = new Vector3();
+	private var playerReturningToStart:Bool = false; // Player returns to start after death
 	
 	private var screenZero:ScreenZero;
 	private var screenOne:ScreenOne;
@@ -469,17 +470,24 @@ class Main {
 	}
 	
 	public function onPlayerDied():Void {
+		playerReturningToStart = true;
+		
 		player.inputEnabled = false;
 		Actuate.tween(worldCameraFollowPoint, ScreenSwitcher.getScreenIndices(lastPlayerPosition).x * 2, { x: 0 } ).onUpdate(function(v:Dynamic) {
 			player.position.x = worldCameraFollowPoint.x;
+			player.signal_PositionChanged.dispatch(player.position);
 			worldCamera.position.x = worldCameraFollowPoint.x;
 		}).onComplete(function(v:Dynamic) {
+			playerReturningToStart = false;
+			
+			// TODO reset whole game
+			
 			for (screen in screens) {
 				screen.reset();
 			}
 			
 			player.inputEnabled = true;
-		}).ease(Expo.easeInOut);
+		}).ease(Quad.easeInOut);
 	}
 	
 	public function onPlayerMoved(position:Vector3):Void {
@@ -520,10 +528,11 @@ class Main {
 			next.onEnter();
 		}
 		
-		worldCameraFollowPoint.x = ScreenSwitcher.getNearestCameraClampX(player.position);
-		
-		// Tween the camera to the follow point
-		Actuate.tween(worldCamera.position, 1, { x: worldCameraFollowPoint.x } ).ease(Sine.easeOut);
+		if(!playerReturningToStart) {
+			worldCameraFollowPoint.x = ScreenSwitcher.getNearestCameraClampX(player.position);
+			// Tween the camera to the follow point
+			Actuate.tween(worldCamera.position, 1, { x: worldCameraFollowPoint.x } ).ease(Sine.easeOut);
+		}
 	}
 	
 	public function restoreSkyToDefaults(duration:Float = 3, inclination:Float = 0.4983, azimuth:Float = 0.1979):Void {		
