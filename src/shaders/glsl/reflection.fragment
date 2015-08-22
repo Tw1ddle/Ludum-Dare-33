@@ -1,9 +1,0 @@
-uniform float totalTime;
-uniform float yOffset;
-
-
-
-void main()
-{
-	gl_FragColor = texture2D(texture, v_texCoord0);
-}
