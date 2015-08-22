@@ -21,6 +21,10 @@ class Enemy extends Object3D {
 		super();
 	}
 	
+	public function tweenPosition():Void {
+		// TODO get next position in upper quartile of screen, or relative to player?
+	}
+	
 	public inline function update(dt:Float):Void {
 	}
 }

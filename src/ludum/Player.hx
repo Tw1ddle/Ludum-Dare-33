@@ -18,7 +18,7 @@ class Player extends Object3D {
 	
 	public var pressedArrowKey:Bool = false;
 	
-	private static inline var baseVelocity:Float = 125; // Pixels per second
+	public var baseVelocity:Float = 125; // Pixels per second
 	private var velocity = new Vector2();
 	
 	public var particleGroup(default, null):Group;
@@ -94,7 +94,7 @@ class Player extends Object3D {
 		});
 		
 		// Emitter bobbing on the y-axis
-		Actuate.tween(particleEmitter.position, 0.5, { y: position.y + 30 } ).ease(Quad.easeOut).repeat().reflect();
+		Actuate.tween(particleEmitter.position, 0.5, { y: position.y + 40 } ).ease(Quad.easeOut).repeat().reflect();
 		
 		#if debug
 		name = "Player";
