@@ -78,6 +78,7 @@ class Main {
 	private var hoveredObjectClickCount:Int = 0;
 	public var interactables(default, null):Array<Object3D> = new Array<Object3D>();
 	private var raycaster = new Raycaster();
+	public var raycastingEnabled:Bool = true;
 	
 	private var starGroup:Group;
 	public var starEmitter(default, null):Emitter;
@@ -443,7 +444,11 @@ class Main {
 		}
 	}
 	
-	public inline function setGameText(text:String, color:String = '#990000', showDuration:Float = 0.5):Void {
+	public inline function setGameText(text:String, color:String = '#990000', ?showDuration:Null<Float>):Void {
+		if (showDuration == null) {
+			showDuration = text.length * 0.04;
+		}
+		
 		gameTextFractionShown = 0.0;
 		Actuate.tween(this, showDuration, { gameTextFractionShown: 1.0 } ).onUpdate(function() {
 			gameText.innerHTML = text.substring(0, Std.int(text.length * gameTextFractionShown));
@@ -605,18 +610,20 @@ class Main {
 		lastAnimationTime = time;
 		
 		// Find intersections
-		raycaster.setFromCamera(mouse, worldCamera);
-		var hovereds = raycaster.intersectObjects(interactables);
-		if (hovereds.length > 0) {
-			if (hoveredObject != hovereds[0].object) {
-				hoveredObject = hovereds[0].object;
-				signal_hoveredObjectChanged.dispatch(hoveredObject);
+		if(raycastingEnabled) {
+			raycaster.setFromCamera(mouse, worldCamera);
+			var hovereds = raycaster.intersectObjects(interactables);
+			if (hovereds.length > 0) {
+				if (hoveredObject != hovereds[0].object) {
+					hoveredObject = hovereds[0].object;
+					signal_hoveredObjectChanged.dispatch(hoveredObject);
+				}
+			} else {
+				if (hoveredObject != null) {
+					signal_hoveredObjectChanged.dispatch(null);
+				}
+				hoveredObject = null;
 			}
-		} else {
-			if (hoveredObject != null) {
-				signal_hoveredObjectChanged.dispatch(null);
-			}
-			hoveredObject = null;
 		}
 		
 		// Update entities

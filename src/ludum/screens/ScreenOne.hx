@@ -37,8 +37,9 @@ class ScreenOne extends Screen {
 	
 	public function onSpiritDied() {
 		spiritDied = true;
-		game.player.inputEnabled = true;
 		game.setGameText("Stupid spirit, you don't tell ME what to do...");
+		game.player.inputEnabled = true;
+		game.raycastingEnabled = true;
 	}
 
 	override public function onFirstEnter() {
@@ -46,13 +47,13 @@ class ScreenOne extends Screen {
 		
 		spirit.position.x = spiritCross.position.x;
 		
+		game.raycastingEnabled = false;
+		
 		game.setGameText("Return to the dark! There is nothing for you here!", '#5555FF');
 		
 		Actuate.tween(spirit.position, 1, { y: 100 } ).delay(2.5).onUpdate(function() {
 		}).onComplete(function() {
 			game.setGameText("A mere spirit means to command ME? Die... NOW.");
-			
-			game.player.inputEnabled = false;
 			
 			game.player.blastParticleEmitter.acceleration.x = 31;
 			game.player.blastParticleEmitter.velocity.set(99, 86, 0);
