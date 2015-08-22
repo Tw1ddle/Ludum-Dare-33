@@ -472,6 +472,7 @@ class Main {
 		playerReturningToStart = true;
 		
 		player.inputEnabled = false;
+		raycastingEnabled = false;
 		
 		var duration = ScreenSwitcher.getScreenIndices(lastPlayerPosition).x * 2;
 		
@@ -489,10 +490,36 @@ class Main {
 			
 			player.inputEnabled = true;
 			player.reset();
+			raycastingEnabled = true;
 		}).ease(Quad.easeInOut);
 		Actuate.tween(worldCameraFollowPoint, duration, { x: 0 } ).onUpdate(function() {
 			worldCamera.position.x = worldCameraFollowPoint.x;
 		}).ease(Quad.easeInOut);
+		
+		setGameText(makeDeathMessage(), duration);
+	}
+	
+	public inline function makeDeathMessage():String {
+		var msg = "";
+		
+		for (i in 0...5) {
+			var rand = Math.random();
+			if (rand < 0.1) {
+				msg += "Noooooooooo...";
+			} else if (rand > 0.1 && rand < 0.3) {
+				msg += "Aaaaarrrrrgh...";
+			} else if (rand > 0.3 && rand < 0.5) {
+				msg += "Urrrrrarrrrr!!!...";
+			} else if(rand < 0.7) {
+				msg += "It can't end this way!...";
+			} else if (rand < 0.9) {
+				msg += "Gaaaahhhh...";
+			} else {
+				msg += "Urrrrrrrgh...";
+			}
+		}
+		
+		return msg;
 	}
 	
 	public function onPlayerMoved(position:Vector3):Void {
