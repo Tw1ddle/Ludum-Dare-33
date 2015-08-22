@@ -19,7 +19,7 @@ class ScreenOne extends Screen {
 		spiritCross = loadBuilding('assets/images/crosses0.png', index, 180, 118, 110, 81, "Burial Ground", [ "That vile spirit rose from here...", "The inscription on the stone has been scorched away...", "...", "......" ]);
 		game.worldScene.add(spiritCross);
 		game.worldScene.add(loadBuilding('assets/images/cross0.png', index, -180, 118, 100, 110, "Ruined Tombstone", ["A charred grave marker, covered in ash...", "The inscription has been destroyed by flame..."]));
-		game.worldScene.add(loadBuilding('assets/images/tomb1.png', index, 280, 118, 100, 110, "Scorched Altar", [ "A runic engraving in the sept reads...", "'Vocatus atque non vocatus, Deus aderit'...", "...", "It's coming back now... yes...", "...", "...AGNI, that was my name...", "Where are my disciples...?" ]));
+		game.worldScene.add(loadBuilding('assets/images/tomb1.png', index, 280, 118, 100, 110, "Scorched Altar", [ "A runic engraving in the sept reads...", "'Vocatus atque non vocatus, Deus aderit'...", "...", "It's coming back now... yes...", "...", "...I was a God, that I was...", "But where are my disciples...?" ]));
 		
 		spirit = new Enemy(game.worldScene, spiritCross.position.x, spiritCross.position.y);
 		game.worldScene.add(spirit);

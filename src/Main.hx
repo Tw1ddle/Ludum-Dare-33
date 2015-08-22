@@ -71,6 +71,7 @@ class Main {
 	public var skyEffectController(default, null):SkyEffectController = new SkyEffectController();
 	
 	private var gameText:Dynamic = null;
+	private var gameTextFractionShown:Float = 0.0;
 	
 	public var signal_hoveredObjectChanged(default, null):Signal1<Object3D> = new Signal1<Object3D>();
 	private var hoveredObject:Object3D = null;
@@ -238,61 +239,51 @@ class Main {
 			"Perhaps they have forgotten me...",
 			"...",
 			"......",
-			"Scouring the charred lands...",
-			"But there was no sight of my followers...",
 			"The impudence! How dare they leave me!",
 			"...",
-			"I wandered through blessed days...",
+			"I will track them down and make them pay...!",
 			"...",
-			"My strength grew under the rays of my blazing master...",
-			"...",
+			"......",
+			"I searched for long days...",
+			"My anger growing hot under the blazing sun...",
 			"...",
 			"And at night...",
-			"The stars wheeled overhead...",
+			"The stars wheeled overhead, unable to touch me...",
 			"...",
-			"As I hastened, even the winds bore against me...",
+			"As I hastened in my search, even the winds failed to bear against me...",
 			"...",
-			"I glinted past the tombs...",
+			"And eventually I happened past fresher tombs...",
 			"...of heathen...",
 			"...and long dead priests",
+			"...and of my own followers",
 			"...",
-			"...",
-			"...",
-			"...",
-			"...",
-			"...",
-			"Until at long last I came to the parched wastes...",
-			"...",
-			"...",
+			"At last, I thought the search nearing an end...",
 			"...",
 			"......",
 			".........",
 			"......",
+			"...But instead I found myself come to the edge of the sea of Otherworldly Stars...",
 			"...",
 			"To come this far and find no one...",
-			"Perhaps my disciples have abandoned me...",
-			"That would be...",
+			"My disciples must have abandoned me...",
+			"That is...",
+			"UNFORGIVEABLE",
 			"...",
-			"UNACCEPTABLE",
-			"...",
-			"They dare to flee to my sisters across this sea of Otherworldly Stars...",
-			"I shall immolate them all...",
-			"...",
+			"They dare to flee to my sisters across the sea...",
+			"I shall immolate their lands...!",
 			"...THEY SHALL BOW BEFORE ME, AGNI, LORD OF FIRE",
 			"...",
-			"..."
+			"...",
 		];
 		
 		for (i in 0...narrative.length) {
 			screens.push(new RandomScreen(this, new Vector2(2 + i, 0), narrative[i]));
 		}
 		
-		screenThree = new ScreenThree(this, new Vector2(53, 0));
-		screenFour = new ScreenFour(this, new Vector2(54, 0));
-		
+		screenThree = new ScreenThree(this, new Vector2(narrative.length + 3, 0));
+		screenFour = new ScreenFour(this, new Vector2(narrative.length + 4, 0));
 		screens.push(screenThree);
 		screens.push(screenFour);
-		screens.push(new RandomScreen(this, new Vector2(55, 0)));
 		
 		// Title/intro text
 		titleText.init("Otherworldly Stars");
@@ -452,9 +443,12 @@ class Main {
 		}
 	}
 	
-	public inline function setGameText(text:String, color:String = '#990000'):Void {
-		gameText.innerHTML = text;
-		gameText.style.color = color;
+	public inline function setGameText(text:String, color:String = '#990000', showDuration:Float = 0.5):Void {
+		gameTextFractionShown = 0.0;
+		Actuate.tween(this, showDuration, { gameTextFractionShown: 1.0 } ).onUpdate(function() {
+			gameText.innerHTML = text.substring(0, Std.int(text.length * gameTextFractionShown));
+			gameText.style.color = color;
+		}).ease(Linear.easeNone);
 	}
 	
 	public function onObjectClicked(x:Float, y:Float):Void {
@@ -473,20 +467,26 @@ class Main {
 		playerReturningToStart = true;
 		
 		player.inputEnabled = false;
-		Actuate.tween(worldCameraFollowPoint, ScreenSwitcher.getScreenIndices(lastPlayerPosition).x * 2, { x: 0 } ).onUpdate(function(v:Dynamic) {
-			player.position.x = worldCameraFollowPoint.x;
+		
+		var duration = ScreenSwitcher.getScreenIndices(lastPlayerPosition).x * 2;
+		
+		Actuate.tween(player.particleEmitter, duration, { alive: 0.1 } );
+		
+		Actuate.tween(player.position, duration, { x: 0 } ).onUpdate(function() {
 			player.signal_PositionChanged.dispatch(player.position);
-			worldCamera.position.x = worldCameraFollowPoint.x;
-		}).onComplete(function(v:Dynamic) {
+		}).onComplete(function() {
 			playerReturningToStart = false;
-			
-			// TODO reset whole game
+			restoreSkyToDefaults();
 			
 			for (screen in screens) {
 				screen.reset();
 			}
 			
 			player.inputEnabled = true;
+			player.reset();
+		}).ease(Quad.easeInOut);
+		Actuate.tween(worldCameraFollowPoint, duration, { x: 0 } ).onUpdate(function() {
+			worldCamera.position.x = worldCameraFollowPoint.x;
 		}).ease(Quad.easeInOut);
 	}
 	

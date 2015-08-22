@@ -155,6 +155,16 @@ class Player extends Mesh {
 		}
 	}
 	
+	public inline function reset():Void {
+		velocity.set(0, 0);
+		inputEnabled = true;
+		pressedArrowKey = false;
+		
+		// TODO reset whole particle system
+		particleEmitter.alive = 0.1;
+		particleEmitter.velocitySpread.set(10, 10, 10);
+	}
+	
 	public inline function fire(x:Float, y:Float):Void {
 		var bullet = new Bullet(); // TODO use emitter pooling
 		bullet.position.set(position.x, position.y, position.z);
