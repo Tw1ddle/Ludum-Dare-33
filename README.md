@@ -10,11 +10,11 @@ Otherworldly Stars is a HTML5/WebGL game and has a graphical style inspired by t
 
 ### Screenshots
 
-![Screenshot1](https://github.com/Tw1ddle/ludum-dare-33/blob/master/screenshots/screenshot1.png?raw=true "Screenshot 1")
+![Screenshot1](https://github.com/Tw1ddle/ludum-dare-33/blob/master/dev/screenshots/screenshot1.png?raw=true "Screenshot 1")
 
-![Screenshot2](https://github.com/Tw1ddle/ludum-dare-33/blob/master/screenshots/screenshot2.png?raw=true "Screenshot 2")
+![Screenshot2](https://github.com/Tw1ddle/ludum-dare-33/blob/master/dev/screenshots/screenshot2.png?raw=true "Screenshot 2")
 
-![Screenshot3](https://github.com/Tw1ddle/ludum-dare-33/blob/master/screenshots/screenshot3.png?raw=true "Screenshot 3")
+![Screenshot3](https://github.com/Tw1ddle/ludum-dare-33/blob/master/dev/screenshots/screenshot3.png?raw=true "Screenshot 3")
 
 ### Dev Log
 
