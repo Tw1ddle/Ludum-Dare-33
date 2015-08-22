@@ -19,7 +19,7 @@ class ScreenZero extends Screen {
 		
 		// Particle emitter
 		starGroup = new Group( {
-			texture: ImageUtils.loadTexture('assets/images/darkfly.png'),
+			texture: ImageUtils.loadTexture('assets/images/firefly.png'),
 			maxAge: 5
 		});
 		
@@ -44,7 +44,7 @@ class ScreenZero extends Screen {
 		
 		game.worldScene.add(loadGround('assets/images/ground0.png', index));
 		game.worldScene.add(loadBuilding('assets/images/temple0.png', index, 80, 118, 100, 110, "Temple of Flame", [ "A charred husk of a temple...", "...", "How was I summoned if this place is abandoned...?", "...", "......", "A worn inscription on the altar reads 'Requiem aeternam dona ei, Varuna'...", "..."]));
-		game.worldScene.add(loadBuilding('assets/images/tomb0.png', index, 280, 118, 100, 110, "Sepulchre of Cinders", [ "An monument dedicated to a God...", "The inscription has worn away.", "...", "I should look around and collect my thoughts...", "..." ]));
+		game.worldScene.add(loadBuilding('assets/images/tomb0.png', index, 280, 118, 100, 110, "Sepulchre of Cinders", [ "A monument dedicated to a God...", "The inscription has worn away.", "...", "I should look around and collect my thoughts...", "..." ]));
 	}
 	
 	override public function onEnter() {

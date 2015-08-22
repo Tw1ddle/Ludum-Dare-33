@@ -18,6 +18,14 @@ class ScreenFour extends Screen {
 		// Each enemy says their stuff and then banishes player
 	}
 	
+	override public function onFirstEnter() {
+		super.onFirstEnter();
+	}
+	
+	override public function onFirstExit() {
+		super.onFirstExit();
+	}	
+	
 	override public function onEnter() {
 		super.onEnter();
 	}

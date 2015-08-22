@@ -24,6 +24,9 @@ class Player extends Object3D {
 	public var particleGroup(default, null):Group;
 	public var particleEmitter(default, null):Emitter;
 	
+	public var blastParticleGroup(default, null):Group;
+	public var blastParticleEmitter(default, null):Emitter;
+	
 	public var inputEnabled:Bool = true;
 	
 	public function new(scene:Scene, x:Float, y:Float, width:Float, height:Float) {
@@ -93,17 +96,39 @@ class Player extends Object3D {
 			opacityEnd: 0
 		});
 		
+		blastParticleGroup = new Group( { texture: ImageUtils.loadTexture('assets/images/flamefly.png'), maxAge: 5 } );
+		blastParticleEmitter = new Emitter({
+			type: 'cube',
+			position: this.position,
+			acceleration: new Vector3(0, 0, 0),
+			velocity: new Vector3(0, 0, 0),
+			velocitySpread: new Vector3(30, 30, 30),
+			particleCount: 3000,
+			sizeStart: 42,
+			sizeEnd: 64,
+			opacityStart: 0.5,
+			opacityMiddle: 1.0,
+			opacityEnd: 0,
+			alive: 0.0
+		});
+		
 		// Emitter bobbing on the y-axis
 		Actuate.tween(particleEmitter.position, 0.5, { y: position.y + 40 } ).ease(Quad.easeOut).repeat().reflect();
 		
 		#if debug
 		name = "Player";
 		particleGroup.mesh.name = "Player Particle Group";
+		blastParticleGroup.mesh.name = "Player Blast Particle Group";
 		#end
 		
 		particleGroup.addEmitter(particleEmitter);
 		particleGroup.mesh.frustumCulled = false;
 		scene.add(particleGroup.mesh);
+		
+		blastParticleGroup.addEmitter(blastParticleEmitter);
+		blastParticleGroup.mesh.frustumCulled = false;
+		scene.add(blastParticleGroup.mesh);
+		
 		scene.add(this);
 	}
 	
@@ -119,6 +144,9 @@ class Player extends Object3D {
 		particleEmitter.velocity.x = -velocity.x * Math.random() * 0.02;
 		particleEmitter.velocity.y = Math.random() * 50 - 1;
 		particleGroup.tick(dt);
+		
+		blastParticleEmitter.position.set(position.x, position.y , position.z);
+		blastParticleGroup.tick(dt);
 		
 		if (velocity.x != 0 || velocity.y != 0) {
 			signal_PositionChanged.dispatch(position);

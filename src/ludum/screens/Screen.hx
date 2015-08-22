@@ -11,7 +11,7 @@ import ludum.DescribableMesh;
 
 class Screen {
 	public var active(default, set):Bool;
-	private var enemies = new Array<Enemy>();
+	public var enemies(default, null) = new Array<Enemy>();
 	private var bullets = new Array<Bullet>();
 	private var index:Vector2;
 	private var game:Main;

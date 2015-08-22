@@ -557,10 +557,16 @@ class Main {
 		
 		addGUIItem(particleGUI.addFolder("Player Emitter"), player.particleEmitter, "Player Emitter");
 		
+		addGUIItem(particleGUI.addFolder("Player Blast Emitter"), player.blastParticleEmitter, "Player Blast Emitter");
+		
 		addGUIItem(particleGUI.addFolder("Star Emitter"), starEmitter, "Star Emitter");
 		
 		for (screen in screens) {
 			screen.addGUIItems(particleGUI);
+			
+			for (enemy in screen.enemies) {
+				addGUIItem(particleGUI.addFolder("Enemy Emitter"), enemy.particleEmitter, "Enemy Emitter");
+			}
 		}
 		
 		addGUIItem(shaderGUI, skyEffectController, "Sky Shader");

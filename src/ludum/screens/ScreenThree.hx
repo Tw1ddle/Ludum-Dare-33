@@ -10,6 +10,14 @@ class ScreenThree extends Screen {
 		game.worldScene.add(loadGround('assets/images/ground3.png', index));
 	}
 	
+	override public function onFirstEnter() {
+		super.onFirstEnter();
+	}
+	
+	override public function onFirstExit() {
+		super.onFirstExit();
+	}	
+	
 	override public function onEnter() {
 		super.onEnter();
 	}
