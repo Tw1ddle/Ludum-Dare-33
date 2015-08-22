@@ -19,6 +19,10 @@ class DescribableMesh extends Mesh implements Describable {
 			return hoverText;
 		}
 		
+		if (click > clickMessages.length) {
+			return Player.randomMessage(Std.int(Math.random() * 3));
+		}
+		
 		return clickMessages[Std.int(MathUtils.clamp(click, 0, clickMessages.length - 1))];
 	}
 }
