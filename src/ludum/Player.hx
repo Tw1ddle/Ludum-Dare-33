@@ -90,7 +90,8 @@ class Player extends Mesh {
 			acceleration: new Vector3(0, 0, 0),
 			velocity: new Vector3(0, 0, 0),
 			velocitySpread: new Vector3(10, 10, 10),
-			particleCount: 300,
+			particleCount: 3000,
+			alive: 0.1,
 			sizeStart: 12,
 			sizeEnd: 42,
 			opacityStart: 0.9,
@@ -151,9 +152,6 @@ class Player extends Mesh {
 		
 		if (velocity.x != 0 || velocity.y != 0) {
 			signal_PositionChanged.dispatch(position);
-			particleEmitter.alive = 1.0;
-		} else {
-			particleEmitter.alive = 0.2;
 		}
 	}
 	

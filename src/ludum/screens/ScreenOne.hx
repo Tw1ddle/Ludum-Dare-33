@@ -38,8 +38,7 @@ class ScreenOne extends Screen {
 	public function onSpiritDied() {
 		spiritDied = true;
 		game.player.inputEnabled = true;
-		game.restoreSkyToDefaults(4, 0.4949, 0.1981);
-		game.setGameText("Stupid spirit, that will teach you...");
+		game.setGameText("Stupid spirit, you don't tell ME what to do...");
 	}
 
 	override public function onFirstEnter() {
@@ -47,11 +46,11 @@ class ScreenOne extends Screen {
 		
 		spirit.position.x = spiritCross.position.x;
 		
-		game.setGameText("Return to the dark, AGNI! There is nothing for you here!", '#5555FF');
+		game.setGameText("Return to the dark! There is nothing for you here!", '#5555FF');
 		
 		Actuate.tween(spirit.position, 1, { y: 100 } ).delay(2.5).onUpdate(function() {
 		}).onComplete(function() {
-			game.setGameText("A mere spirit means to command me? Die... NOW.");
+			game.setGameText("A mere spirit means to command ME? Die... NOW.");
 			
 			game.player.inputEnabled = false;
 			
@@ -68,6 +67,9 @@ class ScreenOne extends Screen {
 				spirit.particleEmitter.acceleration.set(85, 36, 0);
 				spirit.particleEmitter.accelerationSpread.set(200.6, 294, 0);
 				game.setGameText("*Explodes*", '#5555FF');
+				
+				game.restoreSkyToDefaults(4, 0.4949, 0.1981);
+				game.restoreStarsToDefaults();
 			}).onComplete(function() {
 				spirit.signal_Died.dispatch();
 			});
@@ -101,6 +103,11 @@ class ScreenOne extends Screen {
 		}).onUpdate(function() {
 			game.skyEffectController.updateUniforms();
 		});
+		
+		game.starEmitter.opacityMiddle = 1.0;
+		game.starEmitter.acceleration.set(0, 0, 830);
+		game.starEmitter.accelerationSpread.set(0, 0, 560);
+		game.starEmitter.alive = 1.0;
 	}
 	
 	override public function onEnter() {
@@ -109,6 +116,7 @@ class ScreenOne extends Screen {
 	
 	override public function onExit() {
 		super.onExit();
+		game.restoreStarsToDefaults();
 	}	
 	
 	override public function reset() {

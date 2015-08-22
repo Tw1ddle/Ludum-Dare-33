@@ -64,6 +64,8 @@ class Screen {
 		#end
 		
 		game.player.baseVelocity += 15;
+		game.player.particleEmitter.alive = Math.min(game.player.particleEmitter.alive + 0.05, 1.0);
+		game.player.particleEmitter.velocitySpread.addScalar(1.0);
 	}
 	
 	public function onFirstExit() {
@@ -127,7 +129,7 @@ class Screen {
 		return mesh;
 	}
 	
-	public function loadBuilding(imagePath:String, screenIndex:Vector2, xOffset:Float, yOffset:Float, width:Float, height:Float, hoverText:String = "Building", clickText:Array<String>):DescribableMesh {
+	public function loadBuilding(imagePath:String, screenIndex:Vector2, xOffset:Float, yOffset:Float, width:Float, height:Float, hoverText:String = "Building", clickText:Array<String>, interactable:Bool = true):DescribableMesh {
 		var texture = ImageUtils.loadTexture(imagePath, Mappings.UVMapping);
 		texture.minFilter = NearestFilter;
 		texture.magFilter = NearestFilter;
@@ -140,7 +142,9 @@ class Screen {
 		mesh.name = hoverText;
 		#end
 		
-		game.interactables.push(mesh);
+		if(interactable) {
+			game.interactables.push(mesh);
+		}
 		
 		return mesh;
 	}

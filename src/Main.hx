@@ -79,7 +79,7 @@ class Main {
 	private var raycaster = new Raycaster();
 	
 	private var starGroup:Group;
-	private var starEmitter:Emitter;
+	public var starEmitter(default, null):Emitter;
 	public var player(default, null):Player;
 	public var signal_playerClicked(default, null) = new Signal2<Float, Float>();
 	private var titleText:CinematicText = new CinematicText();
@@ -148,6 +148,7 @@ class Main {
 		gameText.style.width = '100%';
 		gameText.style.textAlign = 'center';
 		gameText.style.color = '#444444';
+		gameText.style.fontSize = '20px';
 		gameText.innerHTML = '';
 		gameDiv.appendChild(gameText);
 		
@@ -209,7 +210,7 @@ class Main {
 			particleCount: 2000,
 			opacityStart: 0.0,
 			opacityMiddle: 0.6,
-			opacityMiddleSpread: 0.4, 
+			opacityMiddleSpread: 0.4,
 			opacityEnd: 0.0,
 			sizeStart: 220,
 		});
@@ -237,19 +238,18 @@ class Main {
 			"...",
 			"......",
 			"Scouring the charred lands...",
-			"I began to wonder ...",
+			"But there was no sight of my followers...",
+			"The impudence! How dare they leave me!",
 			"...",
-			"I wandered through day...", // 8
+			"I wandered through blessed days...",
 			"...",
-			"...",
-			"...",
-			"...",
-			"And night...", // 13
+			"My strength grew under the rays of my blazing master...",
 			"...",
 			"...",
-			"The stars wheeled overhead...", // 16
+			"And at night...",
+			"The stars wheeled overhead...",
 			"...",
-			"As I hastened, even the winds bore against me...", // 18
+			"As I hastened, even the winds bore against me...",
 			"...",
 			"I glinted past the tombs...",
 			"...of heathen...",
@@ -260,7 +260,7 @@ class Main {
 			"...",
 			"...",
 			"...",
-			"Until at long last I came to the parched wastes...", // 29
+			"Until at long last I came to the parched wastes...",
 			"...",
 			"...",
 			"...",
@@ -268,18 +268,16 @@ class Main {
 			".........",
 			"......",
 			"...",
-			"To come this far and find no one...", // 37
+			"To come this far and find no one...",
 			"Perhaps my disciples have abandoned me...",
 			"That would be...",
 			"...",
-			"UNACCEPTABLE", // 41
+			"UNACCEPTABLE",
 			"...",
-			"If they have fled across this sea of Otherworldly Stars...", // 43
-			"There shall be no forgiveness",
+			"They dare to flee to my sisters across this sea of Otherworldly Stars...",
 			"I shall immolate them all...",
 			"...",
-			"...",
-			"...THEY SHALL BOW BEFORE AGNI, LORD OF FIRE",
+			"...THEY SHALL BOW BEFORE ME, AGNI, LORD OF FIRE",
 			"...",
 			"..."
 		];
@@ -421,7 +419,7 @@ class Main {
 		}).ease(Sine.easeInOut);
 		
 		// Reduce star background out due to sun being up
-		Actuate.tween(starEmitter, 3, { alive: 0.5, opacityMiddle: 0.3, opacitySpread: 0.3 } ).delay(5);
+		Actuate.tween(starEmitter, 3, { alive: 0.5, opacityMiddle: 0.3 } ).delay(5);
 	}
 	
 	// TODO have a few functions for different star field settings
@@ -481,7 +479,7 @@ class Main {
 			}
 			
 			player.inputEnabled = true;
-		}).ease(Sine.easeInOut);
+		}).ease(Expo.easeInOut);
 	}
 	
 	public function onPlayerMoved(position:Vector3):Void {
@@ -573,6 +571,24 @@ class Main {
 		}).onUpdate(function() {
 			skyEffectController.updateUniforms();
 		});
+	}
+	
+	public function restoreStarsToDefaults():Void {
+		starEmitter.position.set(0, 0, -14170);
+		starEmitter.positionSpread.set(Main.GAME_VIEWPORT_WIDTH * 12, Main.GAME_VIEWPORT_HEIGHT * 10, 0);
+		starEmitter.acceleration.set(0, 0, 0);
+		starEmitter.accelerationSpread.set(0, 0, 0);
+		starEmitter.velocity.set(0, 0, 0);
+		starEmitter.velocitySpread.set(0, 0, 0);
+		starEmitter.particleCount = 2000;
+		starEmitter.opacityStart = 0.0;
+		starEmitter.opacityMiddle = 0.3;
+		starEmitter.opacityEnd = 0.0;
+		starEmitter.sizeStart = 220;
+		starEmitter.sizeMiddle = 220;
+		starEmitter.sizeEnd = 220;
+		starEmitter.alive = 0.5;
+		// NOTE this doesn't reset everything, there are more props...
 	}
 	
 	private function animate(time:Float):Void {

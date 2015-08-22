@@ -124,6 +124,11 @@ class SkyEffectController {
 		SkyShader.uniforms.sunIntensityFactor.value = sunIntensityFactor;
 		SkyShader.uniforms.sunIntensityFalloffSteepness.value = sunIntensityFalloffSteepness;
 		SkyShader.uniforms.sunAngularDiameterDegrees.value = sunAngularDiameterDegrees;
+		
+		#if debug
+		// Trace primaries since dat.gui doesn't display the numbers right
+		trace(primaries);
+		#end
 	}
 	
 	#if debug
