@@ -231,9 +231,9 @@ class Main {
 			type: 'cube',
 			position: new Vector3(Main.GAME_VIEWPORT_WIDTH, 0, -1417),
 			positionSpread: new Vector3(100, Main.GAME_VIEWPORT_HEIGHT, 0),
-			acceleration: new Vector3(0, 0, 0),
-			accelerationSpread: new Vector3(0, 0, 0),
-			velocity: new Vector3(0, 0, 0),
+			acceleration: new Vector3(1, 0, 0),
+			accelerationSpread: new Vector3(17, 47, -127),
+			velocity: new Vector3(-576, 0, 0),
 			velocitySpread: new Vector3(0, 0, 0),
 			sizeStart: 10,
 			sizeEnd: 10,
@@ -262,29 +262,25 @@ class Main {
 		screens.push(screenTwo);
 		
 		var narrative:Array<String> = [
-			"That the graves of my priests could be haunted by such spirits...",
-			"Where are my disciples? Could it be that they have forgotten me...",
-			"For my faithful multitudes to do that... That would be...",
-			"That is...",
-			"Unforgiveable!",
-			"The impudence! How dare they dishonour me so!",
-			"I shall search this land and bring vengeance on those unfaithful ones...",
-			"Through days under the blazing sun...",
-			"And through long nights...",
+			"For the tombs of my priests to be haunted by such spirits...",
+			"Could it be that my disciples have abandoned me...?",
+			"Or that the faithful multitudes have forgotten me...?",
+			"That would be......",
+			"...UNFORGIVEABLE!",
+			"...The impudence! How dare they dishonour me so!",
+			"I shall scour this land and hunt for the unfaithful ones...",
+			"Hastening through long nights...",
 			"Where the stars wheel overhead...",
-			"Ever hastening, even as the winds bear against me...",
-			"Even unto the shore of the sea of Otherworldly Stars...",
+			"Hastening even even if the wind bears against me...",
+			"Even if I come unto the sea of Otherworldly Stars...",
 			"...",
 			"......",
 			".........",
-			"And beyond...",
-			"...into the void...",
-			"At last, I sensed the search was nearing an end...",
-			"To have come so far...",
-			"They dared to flee to my sisters across the sea...",
-			"I shall immolate their lands...!",
-			"...THEY SHALL BOW BEFORE ME, AGNI, LORD OF FIRE",
-			"...",
+			"And far beyond...into the void...",
+			"...This can mean but one thing...",
+			"My wretched followers dared to flee unto the ends of the Earth...!",
+			"I shall slay them all...!",
+			"...THEY SHALL WITHER BEFORE THE LORD OF FIRE"
 		];
 		
 		for (i in 0...narrative.length) {
@@ -400,7 +396,8 @@ class Main {
 		
 		skyEffectController.updateUniforms();
 		
-		starEmitter.accelerationSpread.set(100, 100, 0);
+		starEmitter.acceleration.set(0, 0, 230);
+		starEmitter.accelerationSpread.set(59, 57, 516);
 		
 		titleText.position.set(-1000, 50, -1400);
 		titleText.tween(function() {
@@ -411,7 +408,7 @@ class Main {
 		subtitleText.tween();
 		
 		// Kill most particles after an initial rush of stars
-		starEmitter.alive = 1.0;		
+		screenZero.starEmitter.alive = 1.0;
 		Actuate.tween(screenZero.starEmitter, 5, { alive: 0.03 } ).delay(4);
 		
 		// Move camera to start position
@@ -420,15 +417,16 @@ class Main {
 		});
 		
 		// Bring sun up		
-		Actuate.tween(skyEffectController, 9, { inclination: 0.4983, azimuth: 0.1979, turbidity: 4.7, rayleigh: 2.28, mieDirectionalG: 0.820, refractiveIndex: 1.00029, mieV: 3.936, mieZenithLength: 34000, sunAngularDiameter: 0.00830, depolarizationFactor: 0.020 } ).delay(1).onUpdate(function():Void {
+		Actuate.tween(skyEffectController, 9, { inclination: 0.4983, azimuth: 0.1979, turbidity: 4.7, rayleigh: 2.28, mieDirectionalG: 0.820, refractiveIndex: 1.00029, mieV: 3.936, mieZenithLength: 34000, sunAngularDiameter: 0.00830, depolarizationFactor: 0.020 } ).onUpdate(function():Void {
 			skyEffectController.updateUniforms();
 		}).onComplete(function():Void {
 			// Reduce star background out due to sun being up
 			Actuate.tween(starEmitter, 3, { alive: 0.5, opacityMiddle: 0.3 } ).delay(5);
 			// Remove the funky star movement from the start of the intro
+			starEmitter.acceleration.set(0, 0, 0);
 			starEmitter.accelerationSpread.set(0, 0, 0);
 		}).ease(Sine.easeInOut);
-		Actuate.tween(skyEffectController.cameraPos, 5, { x: 100000, y: -40000, z:0 } ).delay(5).onUpdate(function():Void {
+		Actuate.tween(skyEffectController.cameraPos, 5, { x: 100000, y: -40000, z:0 } ).delay(3).onUpdate(function():Void {
 			skyEffectController.updateUniforms();
 		}).ease(Sine.easeInOut);
 		Actuate.tween(skyEffectController.primaries, 5, { x: 6.8e-7, y: 5.5e-7, z: 4.5e-7 } ).delay(5).onUpdate(function():Void {
@@ -690,8 +688,8 @@ class Main {
 		// Make the star emitter follow the camera
 		starEmitter.position.set(worldCamera.position.x, worldCamera.position.y, -14170);
 		
-		// Make the wind emitter follower the camera
-		windEmitter.position.set(worldCamera.position.x, worldCamera.position.y, -1417);
+		// Make the wind emitter follow the camera, with an offset of 2 screen widths
+		windEmitter.position.set(worldCamera.position.x + Main.GAME_VIEWPORT_WIDTH * 2, worldCamera.position.y, -1417);
 		
 		starGroup.tick(dt);
 		windGroup.tick(dt);

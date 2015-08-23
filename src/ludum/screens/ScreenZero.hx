@@ -44,8 +44,8 @@ class ScreenZero extends Screen {
 		game.worldScene.add(starGroup.mesh);
 		
 		game.worldScene.add(loadGround('assets/images/ground0.png', index));
-		game.worldScene.add(loadBuilding('assets/images/temple0.png', index, 80, 118, 100, 110, "Temple of Flame", [ "A charred husk of a temple...", "...", "How was I summoned if this place is abandoned...?", "...", "......", "A worn inscription on the altar reads 'Requiem aeternam dona ei, Varuna'...", "..."]));
-		game.worldScene.add(loadBuilding('assets/images/tomb0.png', index, 280, 118, 100, 110, "Sepulchre of Cinders", [ "A monument dedicated to a God...", "The inscription has worn away.", "...", "I should look around and collect my thoughts...", "..." ]));
+		game.worldScene.add(loadBuilding('assets/images/temple0.png', index, 80, 118, 100, 110, "Temple of Flame", [ "A charred husk of a temple...", "...", "The dust lays thick on the floors and chokes the air", "......", "A worn inscription at the main altar reads 'Requiem aeternam dona ei, Agni'...", "..."]));
+		game.worldScene.add(loadBuilding('assets/images/tomb0.png', index, 280, 118, 100, 110, "Sepulchre of Cinders", [ "A monument dedicated to a God...", "The inscription on the altar has worn away.", "...", "I should look around and collect my thoughts...", "..." ]));
 	}
 	
 	override public function skyEnterTransition() {

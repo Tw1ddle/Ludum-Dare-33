@@ -15,25 +15,26 @@ class ScreenFour extends Screen {
 	private static var godTalk:Array<SpeechDef> = [
 		{ text: "So you came back...", color: "#FFBF00" },
 		{ text: "I thought we had been through this before...", color: "#2ECCFA" },
-		{ text: "You cannot return to the land of the living...", color: "#DBA901" },
-		{ text: "What is the meaning of this..?", color: "#990000" },
+		{ text: "You cannot have your followers back...", color: "#DBA901" },
 		{ text: "You LESSER Gods conspire to stop ME?", color: "#990000" },
-		{ text: "Where are my followers?! You stole them from me!", color: "#990000" },
-		{ text: "Nonsense!", color: "#FFBF00" },
-		{ text: "You undid yourself when you burnt your followers in your rage!", color: "#FFBF00" },
-		{ text: "The proof of that lies in your wake, fool.", color: "#FFBF00" },
-		{ text: "Now you have but a single follower who cowers now, hidden from sight...", color: "#CEF6F5" },
-		{ text: "Shall we put an end to this farce now?", color: "#FFBF00" },
+		{ text: "Where are they?! You stole them from me!", color: "#990000" },
+		{ text: "Nonsense! Do you remember nothing?", color: "#FFBF00" },
+		{ text: "You undid yourself when you burnt many disciples in a rage!", color: "#FFBF00" },
+		{ text: "The proof of your crimes lies in your wake, fool.", color: "#FFBF00" },
+		{ text: "You have but a single follower left!", color: "#CEF6F5" },
+		{ text: "Let us put an end to this farce?", color: "#FFBF00" },
 		{ text: "Yes!", color: "#2ECCFA" },
-		{ text: "Indeed!", color: "#CEF6F5" },
-		{ text: "It is decided. Come back when you are ready to atone for your crimes...!", color: "#FFBF00" },
-		{ text: "Return to the darkness!", color: "#FFBF00" }
+		{ text: "Indeed! We have no time for dawdling.", color: "#CEF6F5" },
+		{ text: "It is decided. Come back when you have atoned for your crimes...!", color: "#FFBF00" },
+		{ text: "Now begone!", color: "#FFBF00" }
 	];
 	private var godTalkTextIndex:Int = 0;
 	private var gameOverTriggered:Bool = false;
 	
 	public function new(game:Main, index:Vector2, active:Bool = false) {
 		super(game, index, active);
+		
+		game.worldScene.add(loadGround('assets/images/ground3.png', index));
 		
 		// Each enemy says their stuff and then banishes player
 		visnu = new Enemy(game.worldScene, 0, 0, "God of Earth", "assets/images/earthfly.png", 3000, 0.1);
@@ -109,8 +110,7 @@ class ScreenFour extends Screen {
 	
 	private function advanceText(x:Float, y:Float):Void {
 		if (active) {
-			godTalkTextIndex++;
-			if (godTalkTextIndex > godTalk.length && !game.playerReturningToStart && !gameOverTriggered) {
+			if (godTalkTextIndex > godTalk.length - 1 && !game.playerReturningToStart && !gameOverTriggered) {
 				gameOverTriggered = true;
 				
 				visnu.particleEmitter.acceleration.set(65, -15, 351);
@@ -129,6 +129,8 @@ class ScreenFour extends Screen {
 					x: 6.8e-7,
 					y: 4.5e-7,
 					z: 4.5e-7
+				}).onUpdate(function():Void {
+					game.skyEffectController.updateUniforms();
 				});
 				game.starEmitter.opacityMiddle = 1.0;
 				game.starEmitter.acceleration.set(0, 0, 830);
@@ -142,7 +144,10 @@ class ScreenFour extends Screen {
 					game.player.signal_Died.dispatch();
 				});
 			} else {
-				game.setGameText(godTalk[godTalkTextIndex].text, godTalk[godTalkTextIndex].color);
+				if (godTalkTextIndex < godTalk.length - 1) {
+					game.setGameText(godTalk[godTalkTextIndex].text, godTalk[godTalkTextIndex].color);
+					godTalkTextIndex++;
+				}
 			}
 		}
 	}

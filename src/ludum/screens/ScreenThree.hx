@@ -8,7 +8,7 @@ class ScreenThree extends Screen {
 	public function new(game:Main, index:Vector2, active:Bool = false) {
 		super(game, index, active);
 		
-		game.worldScene.add(loadGround('assets/images/ground3.png', index));
+		game.worldScene.add(loadGround('assets/images/ground6.png', index));
 	}
 	
 	override public function onFirstEnter() {
