@@ -24,7 +24,7 @@ class CinematicText extends Object3D {
 	
 	public function init(message:String):Void {		
 		for (i in 0...message.length) {
-			var material = new MeshBasicMaterial( { color: 0x202020, overdraw: 0.5, transparent: true, opacity: 1.0 } );
+			var material = new MeshBasicMaterial( { color: 0x990000, overdraw: 0.5, transparent: true, opacity: 1.0 } );
 			
 			var geometry = new TextGeometry(message.charAt(i), {
 				size: 24,

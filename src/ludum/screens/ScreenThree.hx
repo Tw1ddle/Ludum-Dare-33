@@ -23,21 +23,21 @@ class ScreenThree extends Screen {
 		super.skyEnterTransition();
 		
 		Actuate.tween(game.skyEffectController, 3, {
-			turbidity: 2.32,
-			rayleigh: 2.92,
+			turbidity: 4.7,
+			rayleigh: 2.28,
 			mieCoefficient: 0.005,
 			mieDirectionalG: 0.82,
 			luminance: 1.00,
-			inclination: 0.5056,
-			azimuth: 0.2408,
-			refractiveIndex: 1.000337,
-			numMolecules: 3.72e25,
+			inclination: 0.5154,
+			azimuth: 0.2721,
+			refractiveIndex: 1.000218,
+			numMolecules: 2.542e25,
 			depolarizationFactor: 0.02,
-			rayleighZenithLength: 27030,
-			mieV: 3.946,
-			mieZenithLength: 53000,
-			sunIntensityFactor: 1048,
-			sunIntensityFalloffSteepness: 1.65,
+			rayleighZenithLength: 9135,
+			mieV: 3.936,
+			mieZenithLength: 34000,
+			sunIntensityFactor: 1000,
+			sunIntensityFalloffSteepness: 1.5,
 			sunAngularDiameterDegrees: 0.00933
 		}).onUpdate(function() {
 			game.skyEffectController.updateUniforms();

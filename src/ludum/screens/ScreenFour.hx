@@ -15,16 +15,16 @@ class ScreenFour extends Screen {
 	private static var godTalk:Array<SpeechDef> = [
 		{ text: "So you came back...", color: "#FFBF00" },
 		{ text: "I thought we had been through this before...", color: "#2ECCFA" },
-		{ text: "You cannot have your followers back...", color: "#DBA901" },
+		{ text: "You cannot have your followers back...", color: "#CEF6F5" },
 		{ text: "You LESSER Gods conspire to stop ME?", color: "#990000" },
-		{ text: "Where are they?! You stole them from me!", color: "#990000" },
-		{ text: "Nonsense! Do you remember nothing?", color: "#FFBF00" },
-		{ text: "You undid yourself when you burnt many disciples in a rage!", color: "#FFBF00" },
-		{ text: "The proof of your crimes lies in your wake, fool.", color: "#FFBF00" },
+		{ text: "Where are they? You stole them didn't you!", color: "#990000" },
+		{ text: "Do you remember nothing?", color: "#FFBF00" },
+		{ text: "You undid yourself when you charred your lands in a rage!", color: "#FFBF00" },
+		{ text: "Even now the proof of your crimes lies in your wake. Fool.", color: "#FFBF00" },
 		{ text: "You have but a single follower left!", color: "#CEF6F5" },
 		{ text: "Let us put an end to this farce?", color: "#FFBF00" },
 		{ text: "Yes!", color: "#2ECCFA" },
-		{ text: "Indeed! We have no time for dawdling.", color: "#CEF6F5" },
+		{ text: "Indeed! Time is up.", color: "#CEF6F5" },
 		{ text: "It is decided. Come back when you have atoned for your crimes...!", color: "#FFBF00" },
 		{ text: "Now begone!", color: "#FFBF00" }
 	];
@@ -144,7 +144,7 @@ class ScreenFour extends Screen {
 					game.player.signal_Died.dispatch();
 				});
 			} else {
-				if (godTalkTextIndex < godTalk.length - 1) {
+				if (godTalkTextIndex <= godTalk.length - 1) {
 					game.setGameText(godTalk[godTalkTextIndex].text, godTalk[godTalkTextIndex].color);
 					godTalkTextIndex++;
 				}

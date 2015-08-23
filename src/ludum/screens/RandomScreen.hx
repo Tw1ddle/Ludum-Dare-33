@@ -102,7 +102,6 @@ class RandomScreen extends Screen {
 		super.update(dt);
 	}
 	
-	// Sun up with light blue->red sky, sun low right above horizon
 	private function sunup1():Void {
 		Actuate.tween(game.skyEffectController, 3, {
 			turbidity: 2.075,
@@ -151,6 +150,8 @@ class RandomScreen extends Screen {
 		Actuate.tween(game.skyEffectController.cameraPos, 3, {
 			y: -42000,
 		});
+		
+		game.starEmitter.alive = 0.25;
 	}
 	
 	private function sunup3():Void {
@@ -178,6 +179,8 @@ class RandomScreen extends Screen {
 		Actuate.tween(game.skyEffectController.cameraPos, 3, {
 			y: 6000,
 		});
+		
+		game.starEmitter.alive = 0.25;
 	}
 	
 	private function sunup4():Void {
@@ -205,6 +208,8 @@ class RandomScreen extends Screen {
 		Actuate.tween(game.skyEffectController.cameraPos, 3, {
 			y: -26750
 		});
+		
+		game.starEmitter.alive = 0.0;
 	}
 	
 	private function sunup5():Void {
@@ -228,6 +233,8 @@ class RandomScreen extends Screen {
 		}).onUpdate(function() {
 			game.skyEffectController.updateUniforms();
 		});
+		
+		game.starEmitter.alive = 0.25;
 	}
 	
 	private function sunup6():Void {
@@ -251,6 +258,8 @@ class RandomScreen extends Screen {
 		}).onUpdate(function() {
 			game.skyEffectController.updateUniforms();
 		});
+		
+		game.starEmitter.alive = 0.15;
 	}
 	
 	private function night1():Void {
@@ -277,6 +286,8 @@ class RandomScreen extends Screen {
 		
 		game.starEmitter.acceleration.set(32, -9, 276);
 		game.starEmitter.accelerationSpread.set(0, 22, 26);
+		
+		game.starEmitter.alive = 1.0;
 	}
 	
 	private function night2():Void {
@@ -305,6 +316,8 @@ class RandomScreen extends Screen {
 		game.starEmitter.accelerationSpread.set(0, 342, 564);
 		
 		Actuate.tween(game.windEmitter, 1, { alive: 0.0 } );
+		
+		game.starEmitter.alive = 1.0;
 	}
 	
 	private function hastening1():Void {
@@ -333,6 +346,8 @@ class RandomScreen extends Screen {
 		game.starEmitter.accelerationSpread.set(20, 0, 0);
 		
 		Actuate.tween(game.windEmitter, 1, { alive: 1.0 } );
+		
+		game.starEmitter.alive = 0.5;
 	}
 	
 	private function sea1():Void {
@@ -343,7 +358,7 @@ class RandomScreen extends Screen {
 			mieDirectionalG: 0.82,
 			luminance: 1.00,
 			inclination: 0.5056,
-			azimuth: 0.2445,
+			azimuth: 0.2721,
 			refractiveIndex: 1.00029,
 			numMolecules: 2.542e25,
 			depolarizationFactor: 0.02,
@@ -358,7 +373,7 @@ class RandomScreen extends Screen {
 		});
 		
 		if (!game.playerReturningToStart) {
-			Actuate.tween(game.skyEffectController.primaries, 3, { x: 7.5e-7, y: 4.5e-7, z: 5.1e-7 } ).onUpdate(function() {
+			Actuate.tween(game.skyEffectController.primaries, 3, { x: 6.8e-7, y: 5.5e-7, z: 4.5e-7 } ).onUpdate(function() {
 				game.skyEffectController.updateUniforms();
 			});
 		}
@@ -371,6 +386,8 @@ class RandomScreen extends Screen {
 		game.starEmitter.accelerationSpread.set(0, 0, 0);
 		
 		Actuate.tween(game.windEmitter, 3, { alive: 0.0 } );
+		
+		game.starEmitter.alive = 1.0;
 	}
 	
 	private function sea2():Void {
@@ -403,21 +420,71 @@ class RandomScreen extends Screen {
 		
 		game.starEmitter.acceleration.set(0, 0, 0);
 		game.starEmitter.accelerationSpread.set(0, 0, 0);
+		
+		game.starEmitter.alive = 1.0;
 	}
 	
 	private function sea3():Void {
 		game.starEmitter.acceleration.set(32, 388, 435);
 		game.starEmitter.accelerationSpread.set(0, 342, 164);
+		
+		game.starEmitter.alive = 1.0;
 	}
 	
 	private function sea4():Void {
+		Actuate.tween(game.skyEffectController, 3, {
+			turbidity: 4.7,
+			rayleigh: 2.28,
+			mieCoefficient: 0.005,
+			mieDirectionalG: 0.82,
+			luminance: 1.00,
+			inclination: 0.5080,
+			azimuth: 0.2721,
+			refractiveIndex: 1.000218,
+			numMolecules: 2.542e25,
+			depolarizationFactor: 0.02,
+			rayleighZenithLength: 9135,
+			mieV: 3.936,
+			mieZenithLength: 34000,
+			sunIntensityFactor: 1000,
+			sunIntensityFalloffSteepness: 1.5,
+			sunAngularDiameterDegrees: 0.00933
+		}).onUpdate(function() {
+			game.skyEffectController.updateUniforms();
+		});
+		
 		game.starEmitter.acceleration.set(32, 388, 835);
 		game.starEmitter.accelerationSpread.set(0, 342, 364);
+		
+		game.starEmitter.alive = 1.0;
 	}
 	
 	private function sea5():Void {
+		Actuate.tween(game.skyEffectController, 3, {
+			turbidity: 4.7,
+			rayleigh: 2.28,
+			mieCoefficient: 0.005,
+			mieDirectionalG: 0.82,
+			luminance: 1.00,
+			inclination: 0.5110,
+			azimuth: 0.2721,
+			refractiveIndex: 1.000218,
+			numMolecules: 2.542e25,
+			depolarizationFactor: 0.02,
+			rayleighZenithLength: 9135,
+			mieV: 3.936,
+			mieZenithLength: 34000,
+			sunIntensityFactor: 1000,
+			sunIntensityFalloffSteepness: 1.5,
+			sunAngularDiameterDegrees: 0.00933
+		}).onUpdate(function() {
+			game.skyEffectController.updateUniforms();
+		});
+		
 		game.starEmitter.acceleration.set(32, 388, 1235);
 		game.starEmitter.accelerationSpread.set(0, 342, 564);
+		
+		game.starEmitter.alive = 1.0;
 	}
 	
 	private function void1():Void {
@@ -444,23 +511,32 @@ class RandomScreen extends Screen {
 		
 		game.starEmitter.acceleration.set(32, 388, 835);
 		game.starEmitter.accelerationSpread.set(0, 342, 364);
+		
+		game.starEmitter.alive = 1.0;
 	}
 	
 	private function void2():Void {
 		game.starEmitter.acceleration.set(32, 388, 435);
 		game.starEmitter.accelerationSpread.set(0, 342, 164);
+		
+		game.starEmitter.alive = 1.0;
 	}
 	
 	private function void3():Void {
 		game.starEmitter.acceleration.set(0, 0, 0);
 		game.starEmitter.accelerationSpread.set(0, 0, 0);
+		
+		game.starEmitter.alive = 1.0;
 	}
 	
 	private function void4():Void {
 		game.starEmitter.acceleration.set(0, 0, 0);
 		game.starEmitter.accelerationSpread.set(0, 0, 0);
+		
+		game.starEmitter.alive = 1.0;
 	}
 	
+	// TODO
 	private function mutateSky():Void {		
 		Actuate.tween(game.skyEffectController, 3, {
 			turbidity: 7.25,
@@ -494,6 +570,7 @@ class RandomScreen extends Screen {
 		}
 	}
 	
+	// TODO
 	private var templeDescriptions:Array<Array<String>> = [ [""], [""], [""] ];
 	private var tombDescriptions:Array<Array<String>> = [ [""], [""], [""] ];
 	private var graveDescriptions:Array<Array<String>> = [ [""], [""], [""] ];

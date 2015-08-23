@@ -269,10 +269,10 @@ class Main {
 			"...UNFORGIVEABLE!",
 			"...The impudence! How dare they dishonour me so!",
 			"I shall scour this land and hunt for the unfaithful ones...",
-			"Hastening through long nights...",
+			"I shall hasten through long nights...",
 			"Where the stars wheel overhead...",
-			"Hastening even even if the wind bears against me...",
-			"Even if I come unto the sea of Otherworldly Stars...",
+			"Traveling onwards, even if the wind bears against me...",
+			"And even if I come unto the sea of Otherworldly Stars...",
 			"...",
 			"......",
 			".........",
@@ -562,6 +562,11 @@ class Main {
 				trace("Rejecting screen change to negative screen index");
 				#end
 				player.position.set(lastPlayerPosition.x, lastPlayerPosition.y, lastPlayerPosition.z);
+			} else if (player.position.x < 0) {
+				#if debug
+				trace("Rejecting player movement because it would go into negative x");
+				#end
+				player.position.set(0, 0, lastPlayerPosition.z);
 			} else {
 				var current:Screen = Screen.findScreen(currentIndex, screens);
 				var next:Screen = Screen.findScreen(nextIndex, screens);
