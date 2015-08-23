@@ -319,6 +319,9 @@ class Main {
 			
 		}, false);
 		
+		// Player events
+		player.setupInputEvents();
+		
 		// Mouse events
         Browser.document.addEventListener('mousedown', function(event) {
 			event.preventDefault();

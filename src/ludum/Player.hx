@@ -38,50 +38,6 @@ class Player extends Mesh {
 		width = 1000;
 		height = 1000;
 		
-		// Input events
-		Browser.document.addEventListener('keydown', function(event) {
-			if (!inputEnabled) {
-				return;
-			}
-			
-			var keyCode:Int = event.keyCode;
-			
-			switch(keyCode) {
-				case 37:
-					velocity.x = -baseVelocity;
-					pressedArrowKey = true;
-				case 38:
-					pressedArrowKey = true;
-				case 39:
-					velocity.x = baseVelocity;
-					pressedArrowKey = true;
-				case 40:
-					pressedArrowKey = true;
-				default:
-			}
-		}, false);
-		Browser.document.addEventListener('keyup', function(event) {
-			if (!inputEnabled) {
-				return;
-			}
-			
-			var keyCode:Int = event.keyCode;
-			
-			switch(keyCode) {
-				case 37:
-					velocity.x = 0;
-					pressedArrowKey = true;
-				case 38:
-					pressedArrowKey = true;
-				case 39:
-					velocity.x = 0;
-					pressedArrowKey = true;
-				case 40:
-					pressedArrowKey = true;
-				default:
-			}
-		}, false);
-		
 		// Particle emitter
 		particleGroup = new Group( { texture: ImageUtils.loadTexture('assets/images/flamefly.png'), maxAge: 5 } );
 		particleEmitter = new Emitter({
@@ -155,12 +111,49 @@ class Player extends Mesh {
 	public inline function reset():Void {
 		velocity.set(0, 0);
 		inputEnabled = true;
-		pressedArrowKey = false;
 		baseVelocity = Math.min(baseVelocity, 350);
 		
 		// TODO reset whole particle system
 		particleEmitter.alive = 0.1;
 		particleEmitter.velocitySpread.set(10, 10, 10);
+	}
+	
+	public function setupInputEvents():Void {
+		// Input events
+		Browser.document.addEventListener('keydown', function(event) {
+			if (!inputEnabled) {
+				return;
+			}
+			
+			var keyCode:Int = event.keyCode;
+			
+			switch(keyCode) {
+				case 37:
+					velocity.x = -baseVelocity;
+				case 38:
+				case 39:
+					velocity.x = baseVelocity;
+				case 40:
+				default:
+			}
+		}, false);
+		Browser.document.addEventListener('keyup', function(event) {
+			if (!inputEnabled) {
+				return;
+			}
+			
+			var keyCode:Int = event.keyCode;
+			
+			switch(keyCode) {
+				case 37:
+					velocity.x = 0;
+				case 38:
+				case 39:
+					velocity.x = 0;
+				case 40:
+				default:
+			}
+		}, false);
 	}
 	
 	private static var vocabulary:Array<String> = [ "twinkle", "glow", "sparkle", "glimmer", "gleam", "glint", "blaze", "flicker", "glitter", "shimmer", "glare", "shine" ];
