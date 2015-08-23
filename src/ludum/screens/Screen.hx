@@ -5,6 +5,7 @@ import js.three.ImageUtils;
 import js.three.Mappings;
 import js.three.Mesh;
 import js.three.MeshBasicMaterial;
+import js.three.Object3D;
 import js.three.PlaneGeometry;
 import js.three.Vector2;
 import ludum.DescribableMesh;
@@ -150,6 +151,10 @@ class Screen {
 		}
 		
 		return mesh;
+	}
+	
+	public function positionItem(item:Object3D, x:Float, y:Float, z:Float = -1410):Void {
+		item.position.set(Main.GAME_VIEWPORT_WIDTH * index.x + x, -Main.GAME_VIEWPORT_HEIGHT / 2 + y, z);
 	}
 	
 	#if debug

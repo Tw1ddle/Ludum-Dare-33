@@ -3,6 +3,7 @@ package ludum.screens;
 import external.dat.GUI;
 import js.three.Vector2;
 import ludum.Enemy;
+import motion.*;
 
 typedef SpeechDef = { text:String, color:String }
 
@@ -33,17 +34,28 @@ class ScreenFour extends Screen {
 		{ text: "So you came here again Agni...", color: "#AAAAAA" }
 	];
 	private var godTalkTextIndex:Int = 0;
+	private var gameOverTriggered:Bool = false;
 	
 	public function new(game:Main, index:Vector2, active:Bool = false) {
 		super(game, index, active);
 		
-		game.worldScene.add(loadGround('assets/images/ground4.png', index));
-		
-		// TODO sequence advanced by clicks:
 		// Each enemy says their stuff and then banishes player
-		visnu = new Enemy(game.worldScene, 0, 0, "God of Earth");
-		varuna = new Enemy(game.worldScene, 0, 0, "God of Water");
-		vayu = new Enemy(game.worldScene, 0, 0, "God of Air");
+		visnu = new Enemy(game.worldScene, 0, 0, "God of Earth", "assets/images/earthfly.png", 3000, 0.1);
+		varuna = new Enemy(game.worldScene, 0, 0, "God of Water", "assets/images/icefly.png", 3000, 0.1);
+		vayu = new Enemy(game.worldScene, 0, 0, "God of Air", "assets/images/airfly.png", 3000, 0.1);
+		
+		positionItem(visnu, -250, 300);
+		positionItem(varuna, 0, 300);
+		positionItem(vayu, 250, 300);
+		
+		enemies.push(visnu);
+		enemies.push(varuna);
+		enemies.push(vayu);
+		
+		for (enemy in enemies) {
+			enemy.particleEmitter.alive = 0;
+			enemy.particleEmitter.accelerationSpread.set(8, 8, 0);
+		}
 		
 		game.signal_playerClicked.add(advanceText);
 	}
@@ -56,6 +68,11 @@ class ScreenFour extends Screen {
 		super.onFirstEnter();
 		
 		advanceText(0, 0);
+		
+		for (enemy in enemies) {
+			enemy.particleEmitter.alive = 1.0;
+			enemy.particleEmitter.accelerationSpread.set(8, 8, 0);
+		}
 	}
 	
 	override public function onFirstExit() {
@@ -76,6 +93,13 @@ class ScreenFour extends Screen {
 	
 	override public function reset() {
 		super.reset();
+		
+		godTalkTextIndex = 0;
+		gameOverTriggered = false;
+		
+		for (enemy in enemies) {
+			enemy.particleEmitter.alive = 0.0;
+		}
 	}
 	
 	override public function update(dt:Float):Void {
@@ -90,8 +114,37 @@ class ScreenFour extends Screen {
 	private function advanceText(x:Float, y:Float):Void {
 		if (active) {
 			godTalkTextIndex++;
-			if (godTalkTextIndex > godTalk.length && !game.playerReturningToStart) {
-				game.player.signal_Died.dispatch();
+			if (godTalkTextIndex > godTalk.length && !game.playerReturningToStart && !gameOverTriggered) {
+				gameOverTriggered = true;
+				
+				visnu.particleEmitter.acceleration.set(65, -15, 351);
+				visnu.particleEmitter.accelerationSpread.set(43, 41, 61);
+				
+				varuna.particleEmitter.acceleration.set(0, -14, 262);
+				varuna.particleEmitter.accelerationSpread.set(21, 30, 0);
+				
+				vayu.particleEmitter.acceleration.set(-65, -15, 351);
+				vayu.particleEmitter.accelerationSpread.set(43, 41, 61);
+				
+				game.setGameText("Arrrrrghhhh! Noooooooooooooooooooooo....", 3);
+				Actuate.tween(game.player.particleEmitter, 1, { alive: 0.1 } );
+				
+				Actuate.tween(game.skyEffectController.primaries, 1, {
+					x: 5.8e-7,
+					y: 5.5e-7,
+					z: 5.7e-7
+				});
+				game.starEmitter.opacityMiddle = 1.0;
+				game.starEmitter.acceleration.set(0, 0, 830);
+				game.starEmitter.accelerationSpread.set(0, 0, 560);
+				game.starEmitter.alive = 1.0;
+				
+				Actuate.tween(visnu.particleEmitter, 3, { alive: 1.0 } ).onUpdate(function() {
+					varuna.particleEmitter.alive = visnu.particleEmitter.alive;
+					vayu.particleEmitter.alive = visnu.particleEmitter.alive;
+				}).onComplete(function() {
+					game.player.signal_Died.dispatch();
+				});
 			} else {
 				game.setGameText(godTalk[godTalkTextIndex].text, godTalk[godTalkTextIndex].color);
 			}

@@ -26,7 +26,7 @@ class Enemy extends Mesh implements Describable {
 	public var hoverText(default, null):String;
 	private var clickMessages:Array<String> = new Array<String>();
 	
-	public function new(scene:Scene, x:Float, y:Float, ?hoverText:String = "A vile spirit...") {
+	public function new(scene:Scene, x:Float, y:Float, ?hoverText:String = "A vile spirit...", texture:String = 'assets/images/darkfly.png', particles:Float = 300, alive:Float = 1.0) {
 		super();
 		
 		this.hoverText = hoverText;
@@ -34,7 +34,7 @@ class Enemy extends Mesh implements Describable {
 		position.set(x, y, -1400);
 		
 		// Particle emitter
-		particleGroup = new Group( { texture: ImageUtils.loadTexture('assets/images/darkfly.png'), maxAge: 5 } );
+		particleGroup = new Group( { texture: ImageUtils.loadTexture(texture), maxAge: 5 } );
 		particleEmitter = new Emitter({
 			type: 'cube',
 			position: this.position,

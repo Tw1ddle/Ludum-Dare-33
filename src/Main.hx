@@ -199,7 +199,6 @@ class Main {
 		
 		worldScene.add(skyMesh);
 		
-		// TODO could use vignette shader for life force, create the need to flag spots/reach places (good for a time limit themed game actually!)
 		// Stars
 		starGroup = new Group( { texture: ImageUtils.loadTexture('assets/images/icefly.png'), maxAge: 3 } );
 		starEmitter = new Emitter({
@@ -285,6 +284,11 @@ class Main {
 		screenFour = new ScreenFour(this, new Vector2(narrative.length + 4, 0));
 		screens.push(screenThree);
 		screens.push(screenFour);
+		
+		//screenThree = new ScreenThree(this, new Vector2(3, 0));
+		//screenFour = new ScreenFour(this, new Vector2(4, 0));
+		//screens.push(screenThree);
+		//screens.push(screenFour);
 		
 		// Title/intro text
 		titleText.init("Otherworldly Stars");
@@ -415,9 +419,6 @@ class Main {
 		Actuate.tween(starEmitter, 3, { alive: 0.5, opacityMiddle: 0.3 } ).delay(5);
 	}
 	
-	// TODO have a few functions for different star field settings
-	// TODO have a few functions for 
-	
 	private inline function showText(message:String, ?onShowComplete:Void->Void = null, ?onHideComplete:Void->Void = null):Void {
 		titleText.init(message);
 		titleText.tween(onShowComplete, onHideComplete);
@@ -479,20 +480,6 @@ class Main {
 		var duration = ScreenSwitcher.getScreenIndices(lastPlayerPosition).x * 2;
 		setGameText(makeDeathMessage(), duration, Quad.easeInOut);
 		
-		Actuate.tween(player.particleEmitter, duration, { alive: 0.1 } );
-		
-		Actuate.tween(skyEffectController.primaries, 3, {
-			x: 5.8e-7,
-			y: 5.5e-7,
-			z: 5.7e-7
-		});
-		starEmitter.opacityMiddle = 1.0;
-		starEmitter.acceleration.set(0, 0, 830);
-		starEmitter.accelerationSpread.set(0, 0, 560);
-		starEmitter.alive = 1.0;
-		
-		player.particleEmitter.alive = 0.0;
-		
 		Actuate.tween(player.position, duration, { x: 0 } ).onUpdate(function() {
 			player.signal_PositionChanged.dispatch(player.position);
 		}).onComplete(function() {
@@ -548,7 +535,7 @@ class Main {
 			var currentIndex = ScreenSwitcher.getScreenIndices(lastPlayerPosition);
 			var nextIndex = ScreenSwitcher.getScreenIndices(position);
 			
-			if (nextIndex.x == -1) { // TODO || too early due to intro sequence (or just deny player control?)
+			if (nextIndex.x == -1) {
 				#if debug
 				trace("Rejecting screen change to negative screen index");
 				#end
@@ -747,12 +734,17 @@ class Main {
 		
 		addGUIItem(particleGUI.addFolder("Star Emitter"), starEmitter, "Star Emitter");
 		
+		var screenCount = 0;
 		for (screen in screens) {
 			screen.addGUIItems(particleGUI);
 			
+			var enemyCount = 0;
 			for (enemy in screen.enemies) {
-				addGUIItem(particleGUI.addFolder("Enemy Emitter"), enemy.particleEmitter, "Enemy Emitter");
+				addGUIItem(particleGUI.addFolder("Enemy Emitter " + "(screen: " + screenCount + ", enemy: " + enemyCount + ")"), enemy.particleEmitter, "Enemy Emitter");
+				enemyCount++;
 			}
+			
+			screenCount++;
 		}
 		
 		addGUIItem(shaderGUI, skyEffectController, "Sky Shader");

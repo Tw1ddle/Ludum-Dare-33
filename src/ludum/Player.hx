@@ -138,9 +138,6 @@ class Player extends Mesh {
 		position.x += velocity.x * dt;
 		position.y += velocity.y * dt;
 		
-		// TODO slow emitter down if not moving
-		// TODO set up on emitter
-		// TODO set player position based on the top of the ground? particle effect works nicely to avoid any animation requirements
 		particleEmitter.position.x = position.x;
 		particleEmitter.position.z = position.z;
 		particleEmitter.velocity.x = -velocity.x * Math.random() * 0.02;

@@ -35,8 +35,6 @@ class CinematicText extends Object3D {
 			
 			var mesh = new Mesh(geometry, material);
 			
-			//mesh.visible = false;
-			
 			letters.push(mesh);
 			add(mesh);
 		}

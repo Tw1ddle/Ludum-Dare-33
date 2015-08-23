@@ -12,10 +12,6 @@ class RandomScreen extends Screen {
 		
 		this.gameText = gameText;
 		game.worldScene.add(loadGround("assets/images/ground1.png", index));
-		
-		//game.worldScene.add(loadBuilding('assets/images/crosses0.png', index, 180, 118, 110, 81, "Burial Ground", [ "That vile spirit rose from here...", "The inscription on the stone has been scorched away...", "...", "......" ], false));
-		//game.worldScene.add(loadBuilding('assets/images/cross0.png', index, -180, 118, 100, 110, "Ruined Tombstone", ["A charred grave marker, covered in ash...", "The inscription has been destroyed by flame..."], false));
-		//game.worldScene.add(loadBuilding('assets/images/tomb1.png', index, 280, 118, 100, 110, "Scorched Altar", [ "A runic engraving in the sept reads...", "'Vocatus atque non vocatus, Deus aderit'...", "...", "It's coming back now... yes...", "...", "...AGNI, that was my name...", "Where are my disciples...?" ], false));
 	}
 	
 	override public function onFirstEnter() {
