@@ -324,13 +324,16 @@ class Main {
 		
 		// Mouse events
         Browser.document.addEventListener('mousedown', function(event) {
+			event.preventDefault();
 			updateMousePosition(event.clientX, event.clientY);
 			signal_playerClicked.dispatch(mouse.x, mouse.y);
         }, false);
         Browser.document.addEventListener('mouseup', function(event) {
+			event.preventDefault();
 			updateMousePosition(event.clientX, event.clientY);
         }, false);
         Browser.document.addEventListener('mousemove', function(event) {
+            event.preventDefault();
 			updateMousePosition(event.clientX, event.clientY);
         }, false);
 		

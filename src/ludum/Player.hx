@@ -121,9 +121,13 @@ class Player extends Mesh {
 	public function setupInputEvents():Void {
 		// Input events
 		Browser.document.addEventListener('keydown', function(event) {
+			trace("got keydown");
+			
 			if (!inputEnabled) {
 				return;
 			}
+			
+			trace("keydown, player input enabled");
 			
 			var keyCode:Int = event.keyCode;
 			
@@ -138,9 +142,13 @@ class Player extends Mesh {
 			}
 		}, false);
 		Browser.document.addEventListener('keyup', function(event) {
+			trace("got keyup");
+			
 			if (!inputEnabled) {
 				return;
 			}
+			
+			trace("keyup, player input enabled");
 			
 			var keyCode:Int = event.keyCode;
 			
