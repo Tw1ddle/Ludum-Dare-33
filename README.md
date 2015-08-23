@@ -2,7 +2,7 @@
 
 My entry for Ludum Dare 33, the world's largest online game jam.
 
-Play it [here](TODO) and visit the Ludum Dare [submission page](TODO).
+Play it [here](TODO), visit the Ludum Dare [submission page](TODO), or watch this [playthrough video](https://www.youtube.com/watch?v=TxFP0QTp4XI).
 
 ### About
 
@@ -26,7 +26,7 @@ Otherworldly Stars is a HTML5/WebGL game and has a graphical style inspired by t
 * 16th-21st: Holiday!
 * 22nd-24th: The Compo.
 
-See the [writeup](http://samcodes.co.uk/ludum-dare-33-dev-log/) postmortem blog.
+See the [writeup](http://samcodes.co.uk/ludum-dare-33-dev-log/) blogpost.
 
 ### Credits
 
