@@ -46,7 +46,7 @@ class ScreenOne extends Screen {
 	
 	public function onSpiritDied() {
 		spiritDied = true;
-		game.setGameText("Stupid spirit, you don't tell ME what to do...");
+		game.setGameText("*Explodes*", '#5555FF', 0.5);
 		game.player.inputEnabled = true;
 		game.raycastingEnabled = true;
 	}
@@ -58,15 +58,16 @@ class ScreenOne extends Screen {
 		
 		game.raycastingEnabled = false;
 		
-		game.setGameText("Return to the dark! There is nothing for you here!", '#5555FF');
+		game.setGameText("Return to the darkness!", '#5555FF');
 		
 		Actuate.tween(spirit.position, 1, { y: 100 } ).delay(2.5).onUpdate(function() {
 		}).onComplete(function() {
-			game.setGameText("A mere spirit means to command ME? Die... NOW.");
+			game.setGameText("A mere spirit means to command me? Die... NOW.");
 			
 			game.player.blastParticleEmitter.acceleration.x = 31;
 			game.player.blastParticleEmitter.velocity.set(99, 86, 0);
 			game.player.blastParticleEmitter.velocitySpread.set(26, 22, 30);
+			game.player.blastParticleEmitter.accelerationSpread.set(143, 15, 0);
 			
 			// Player flares up and spirit explodes
 			Actuate.tween(game.player.blastParticleEmitter, 2, { alive: 1.0 } ).onComplete(function() {
@@ -76,9 +77,8 @@ class ScreenOne extends Screen {
 			Actuate.tween(spirit.particleEmitter, 2, { alive: 0.0 } ).delay(2.0).onUpdate(function() {
 				spirit.particleEmitter.acceleration.set(85, 36, 0);
 				spirit.particleEmitter.accelerationSpread.set(200.6, 294, 0);
-				game.setGameText("*Explodes*", '#5555FF');
 				
-				game.restoreSkyToDefaults(4, 0.4949, 0.1981);
+				game.restoreSkyToDefaults(8, 0.4949, 0.1981);
 				game.restoreStarsToDefaults();
 			}).onComplete(function() {
 				spirit.signal_Died.dispatch();

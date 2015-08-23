@@ -82,14 +82,14 @@ class Main {
 	
 	private var starGroup:Group;
 	public var starEmitter(default, null):Emitter;
+	private var windGroup:Group;
+	public var windEmitter(default, null):Emitter;
+	
 	public var player(default, null):Player;
 	public var signal_playerClicked(default, null) = new Signal2<Float, Float>();
 	private var titleText:CinematicText = new CinematicText();
 	private var subtitleText:CinematicText = new CinematicText();
-	private var charredLandsText:CinematicText = new CinematicText();
-	private var parchedWastesText:CinematicText = new CinematicText();
-	private var seaOfStarsText:CinematicText = new CinematicText();
-	
+
 	private var lastPlayerPosition:Vector3 = new Vector3();
 	public var playerReturningToStart(default, null):Bool = false; // Player returns to start after death
 	
@@ -225,6 +225,33 @@ class Main {
 		starGroup.mesh.frustumCulled = false;
 		worldScene.add(starGroup.mesh);
 		
+		// Wind particle emitter
+		windGroup = new Group( { texture: ImageUtils.loadTexture('assets/images/firefly.png'), maxAge: 5 });
+		windEmitter = new Emitter({
+			type: 'cube',
+			position: new Vector3(Main.GAME_VIEWPORT_WIDTH, 0, -1417),
+			positionSpread: new Vector3(100, Main.GAME_VIEWPORT_HEIGHT, 0),
+			acceleration: new Vector3(0, 0, 0),
+			accelerationSpread: new Vector3(0, 0, 0),
+			velocity: new Vector3(0, 0, 0),
+			velocitySpread: new Vector3(0, 0, 0),
+			sizeStart: 10,
+			sizeEnd: 10,
+			opacityStart: 0,
+			opacityMiddle: 1,
+			opacityEnd: 0,
+			particleCount: 5000,
+			alive: 0
+		});
+		
+		#if debug
+		windGroup.mesh.name = "Wind Particle Group";
+		#end
+		
+		windGroup.addEmitter(windEmitter);
+		windGroup.mesh.frustumCulled = false;
+		worldScene.add(windGroup.mesh);
+		
 		// Setup screens
 		screenZero = new ScreenZero(this, new Vector2(0, 0));
 		screenOne = new ScreenOne(this, new Vector2(1, 0));
@@ -234,45 +261,29 @@ class Main {
 		screens.push(screenOne);
 		screens.push(screenTwo);
 		
-		var narrative:Array<String> = [ 
-			"I must find my disciples...",
-			"Perhaps they have forgotten me...",
-			"...",
-			"......",
-			"The impudence! How dare they leave me!",
-			"...",
-			"I will track them down and make them pay...!",
-			"...",
-			"......",
-			"I searched for long days...",
-			"My anger growing hot under the blazing sun...",
-			"...",
-			"And at night...",
-			"The stars wheeled overhead, unable to touch me...",
-			"...",
-			"As I hastened in my search, even the winds failed to bear against me...",
-			"...",
-			"And eventually I happened past fresher tombs...",
-			"...of heathen...",
-			"...and long dead priests",
-			"...and of my own followers",
-			"...",
-			"At last, I thought the search nearing an end...",
+		var narrative:Array<String> = [
+			"That the graves of my priests could be haunted by such spirits...",
+			"Where are my disciples? Could it be that they have forgotten me...",
+			"For my faithful multitudes to do that... That would be...",
+			"That is...",
+			"Unforgiveable!",
+			"The impudence! How dare they dishonour me so!",
+			"I shall search this land and bring vengeance on those unfaithful ones...",
+			"Through days under the blazing sun...",
+			"And through long nights...",
+			"Where the stars wheel overhead...",
+			"Ever hastening, even as the winds bear against me...",
+			"Even unto the shore of the sea of Otherworldly Stars...",
 			"...",
 			"......",
 			".........",
-			"......",
-			"...But instead I found myself come to the edge of the sea of Otherworldly Stars...",
-			"...",
-			"To come this far and find no one...",
-			"My disciples must have abandoned me...",
-			"That is...",
-			"UNFORGIVEABLE",
-			"...",
-			"They dare to flee to my sisters across the sea...",
+			"And beyond...",
+			"...into the void...",
+			"At last, I sensed the search was nearing an end...",
+			"To have come so far...",
+			"They dared to flee to my sisters across the sea...",
 			"I shall immolate their lands...!",
 			"...THEY SHALL BOW BEFORE ME, AGNI, LORD OF FIRE",
-			"...",
 			"...",
 		];
 		
@@ -280,8 +291,8 @@ class Main {
 			screens.push(new RandomScreen(this, new Vector2(2 + i, 0), narrative[i]));
 		}
 		
-		screenThree = new ScreenThree(this, new Vector2(narrative.length + 3, 0));
-		screenFour = new ScreenFour(this, new Vector2(narrative.length + 4, 0));
+		screenThree = new ScreenThree(this, new Vector2(narrative.length - 1 + 3, 0));
+		screenFour = new ScreenFour(this, new Vector2(narrative.length - 1 + 4, 0));
 		screens.push(screenThree);
 		screens.push(screenFour);
 		
@@ -295,14 +306,6 @@ class Main {
 		subtitleText.init("You Are The Monster");
 		worldScene.add(titleText);
 		worldScene.add(subtitleText);
-		
-		// Screen/area intro text
-		charredLandsText.init("The Charred Lands");
-		parchedWastesText.init("The Parched Wastes");
-		seaOfStarsText.init("The Sea Of Stars");
-		worldScene.add(charredLandsText);
-		worldScene.add(parchedWastesText);
-		worldScene.add(seaOfStarsText);
 		
 		// Specify items player can click
 		interactables.push(player);
@@ -392,7 +395,12 @@ class Main {
 		worldCamera.position.set(-1200, 0, 0); // Left of initial game screen for intro
 		skyEffectController.inclination = 0.5160; // Sun set under horizon
 		skyEffectController.azimuth = 0.1700; // East of world camera but west of altar
+		skyEffectController.cameraPos.set(-163500, -100000, -415000); // Distant sun
+		skyEffectController.primaries.set(5.7e-7, 5.8e-7, 6.0e-7); // Dull blue-grey
+		
 		skyEffectController.updateUniforms();
+		
+		starEmitter.accelerationSpread.set(100, 100, 0);
 		
 		titleText.position.set(-1000, 50, -1400);
 		titleText.tween(function() {
@@ -402,21 +410,30 @@ class Main {
 		subtitleText.position.set(-1000, -50, -1400);
 		subtitleText.tween();
 		
+		// Kill most particles after an initial rush of stars
+		starEmitter.alive = 1.0;		
+		Actuate.tween(screenZero.starEmitter, 5, { alive: 0.03 } ).delay(4);
+		
 		// Move camera to start position
 		Actuate.tween(worldCamera.position, 6, { x: ScreenSwitcher.getNearestCameraClampX(player.position) } ).delay(3).ease(Sine.easeInOut).onComplete(function() {
 			setGameText("Arrow keys to move, click and hover to interact.", "#AAAAAA"); // Initial player control instructions
 		});
 		
-		// Kill most particles after the initial rush of stars
-		Actuate.tween(screenZero.starEmitter, 5, { alive: 0.03 } ).delay(3);
-		
-		// Bring sun up
-		Actuate.tween(skyEffectController, 5, { inclination: 0.4983, azimuth: 0.1979, turbidity: 4.7, rayleigh: 2.28, mieDirectionalG: 0.820, refractiveIndex: 1.00029, mieV: 3.936, mieZenithLength: 34000, sunAngularDiameter: 0.00830, depolarizationFactor: 0.020 } ).delay(5).onUpdate(function():Void {
+		// Bring sun up		
+		Actuate.tween(skyEffectController, 9, { inclination: 0.4983, azimuth: 0.1979, turbidity: 4.7, rayleigh: 2.28, mieDirectionalG: 0.820, refractiveIndex: 1.00029, mieV: 3.936, mieZenithLength: 34000, sunAngularDiameter: 0.00830, depolarizationFactor: 0.020 } ).delay(1).onUpdate(function():Void {
+			skyEffectController.updateUniforms();
+		}).onComplete(function():Void {
+			// Reduce star background out due to sun being up
+			Actuate.tween(starEmitter, 3, { alive: 0.5, opacityMiddle: 0.3 } ).delay(5);
+			// Remove the funky star movement from the start of the intro
+			starEmitter.accelerationSpread.set(0, 0, 0);
+		}).ease(Sine.easeInOut);
+		Actuate.tween(skyEffectController.cameraPos, 5, { x: 100000, y: -40000, z:0 } ).delay(5).onUpdate(function():Void {
 			skyEffectController.updateUniforms();
 		}).ease(Sine.easeInOut);
-		
-		// Reduce star background out due to sun being up
-		Actuate.tween(starEmitter, 3, { alive: 0.5, opacityMiddle: 0.3 } ).delay(5);
+		Actuate.tween(skyEffectController.primaries, 5, { x: 6.8e-7, y: 5.5e-7, z: 4.5e-7 } ).delay(5).onUpdate(function():Void {
+			skyEffectController.updateUniforms();
+		}).ease(Sine.easeInOut);
 	}
 	
 	private inline function showText(message:String, ?onShowComplete:Void->Void = null, ?onHideComplete:Void->Void = null):Void {
@@ -445,7 +462,7 @@ class Main {
 		}
 	}
 	
-	public inline function setGameText(text:String, color:String = '#990000', ?showDuration:Null<Float>, ?ease:IEasing):Void {
+	public inline function setGameText(text:String, color:String = '#990000', ?showDuration:Null<Float>, ?ease:IEasing, ?onComplete:Void->Void):Void {
 		if (showDuration == null) {
 			showDuration = text.length * 0.04;
 		}
@@ -454,11 +471,15 @@ class Main {
 			ease = Linear.easeNone;
 		}
 		
+		if (onComplete == null) {
+			onComplete = function() {}
+		}
+		
 		gameTextFractionShown = 0.0;
 		Actuate.tween(this, showDuration, { gameTextFractionShown: 1.0 } ).onUpdate(function() {
 			gameText.innerHTML = text.substring(0, Std.int(text.length * gameTextFractionShown));
 			gameText.style.color = color;
-		}).ease(ease);
+		}).ease(ease).onComplete(onComplete);
 	}
 	
 	public function onObjectClicked(x:Float, y:Float):Void {
@@ -477,14 +498,17 @@ class Main {
 		player.inputEnabled = false;
 		raycastingEnabled = false;
 		
-		var duration = ScreenSwitcher.getScreenIndices(lastPlayerPosition).x * 2;
+		var duration = ScreenSwitcher.getScreenIndices(lastPlayerPosition).x * 0.4;
 		setGameText(makeDeathMessage(), duration, Quad.easeInOut);
 		
 		Actuate.tween(player.position, duration, { x: 0 } ).onUpdate(function() {
 			player.signal_PositionChanged.dispatch(player.position);
+			
+			if (player.position.x < 1000) {
+				screenZero.starEmitter.alive = 1.0;
+			}
 		}).onComplete(function() {
 			setGameText(".........", 3);
-			screenZero.starEmitter.alive = 1.0;
 			
 			Actuate.tween(screenZero.starEmitter, 2, { alive: 0.1 } ).onComplete(function() {				
 				restoreSkyToDefaults(3);
@@ -666,7 +690,11 @@ class Main {
 		// Make the star emitter follow the camera
 		starEmitter.position.set(worldCamera.position.x, worldCamera.position.y, -14170);
 		
+		// Make the wind emitter follower the camera
+		windEmitter.position.set(worldCamera.position.x, worldCamera.position.y, -1417);
+		
 		starGroup.tick(dt);
+		windGroup.tick(dt);
 		
 		titleText.update(dt);
 		player.update(dt);
@@ -733,6 +761,8 @@ class Main {
 		addGUIItem(particleGUI.addFolder("Player Blast Emitter"), player.blastParticleEmitter, "Player Blast Emitter");
 		
 		addGUIItem(particleGUI.addFolder("Star Emitter"), starEmitter, "Star Emitter");
+		
+		addGUIItem(particleGUI.addFolder("Wind Emitter"), windEmitter, "Wind Emitter");
 		
 		var screenCount = 0;
 		for (screen in screens) {

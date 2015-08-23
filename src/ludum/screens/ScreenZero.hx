@@ -71,6 +71,8 @@ class ScreenZero extends Screen {
 		}).onUpdate(function() {
 			game.skyEffectController.updateUniforms();
 		});
+		
+		game.starEmitter.accelerationSpread.set(50, 50, 0);
 	}
 	
 	override public function onEnter() {
@@ -96,7 +98,7 @@ class ScreenZero extends Screen {
 	
 	#if debug
 	override public function addGUIItems(gui:GUI):Void {
-		game.addGUIItem(game.particleGUI.addFolder("Ocean Emitter"), starEmitter, "Ocean Emitter");
+		game.addGUIItem(game.particleGUI.addFolder("Screen Zero Star Emitter"), starEmitter, "Screen Zero Star Emitter");
 	}
 	#end
 }

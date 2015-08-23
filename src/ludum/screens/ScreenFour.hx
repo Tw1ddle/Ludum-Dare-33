@@ -13,25 +13,21 @@ class ScreenFour extends Screen {
 	private var vayu:Enemy;
 	
 	private static var godTalk:Array<SpeechDef> = [
-		{ text: "So you came here again Agni...", color: "#AAAAAA" },
-		{ text: "So you came here again Agni...", color: "#AAAAAA" },
-		{ text: "So you came here again Agni...", color: "#AAAAAA" },
-		{ text: "So you came here again Agni...", color: "#AAAAAA" },
-		{ text: "So you came here again Agni...", color: "#AAAAAA" },
-		{ text: "So you came here again Agni...", color: "#AAAAAA" },
-		{ text: "So you came here again Agni...", color: "#AAAAAA" },
-		{ text: "So you came here again Agni...", color: "#AAAAAA" },
-		{ text: "So you came here again Agni...", color: "#AAAAAA" },
-		{ text: "So you came here again Agni...", color: "#AAAAAA" },
-		{ text: "So you came here again Agni...", color: "#AAAAAA" },
-		{ text: "So you came here again Agni...", color: "#AAAAAA" },
-		{ text: "So you came here again Agni...", color: "#AAAAAA" },
-		{ text: "So you came here again Agni...", color: "#AAAAAA" },
-		{ text: "So you came here again Agni...", color: "#AAAAAA" },
-		{ text: "So you came here again Agni...", color: "#AAAAAA" },
-		{ text: "So you came here again Agni...", color: "#AAAAAA" },
-		{ text: "So you came here again Agni...", color: "#AAAAAA" },
-		{ text: "So you came here again Agni...", color: "#AAAAAA" }
+		{ text: "So you came back...", color: "#FFBF00" },
+		{ text: "I thought we had been through this before...", color: "#2ECCFA" },
+		{ text: "You cannot return to the land of the living...", color: "#DBA901" },
+		{ text: "What is the meaning of this..?", color: "#990000" },
+		{ text: "You LESSER Gods conspire to stop ME?", color: "#990000" },
+		{ text: "Where are my followers?! You stole them from me!", color: "#990000" },
+		{ text: "Nonsense!", color: "#FFBF00" },
+		{ text: "You undid yourself when you burnt your followers in your rage!", color: "#FFBF00" },
+		{ text: "The proof of that lies in your wake, fool.", color: "#FFBF00" },
+		{ text: "Now you have but a single follower who cowers now, hidden from sight...", color: "#CEF6F5" },
+		{ text: "Shall we put an end to this farce now?", color: "#FFBF00" },
+		{ text: "Yes!", color: "#2ECCFA" },
+		{ text: "Indeed!", color: "#CEF6F5" },
+		{ text: "It is decided. Come back when you are ready to atone for your crimes...!", color: "#FFBF00" },
+		{ text: "Return to the darkness!", color: "#FFBF00" }
 	];
 	private var godTalkTextIndex:Int = 0;
 	private var gameOverTriggered:Bool = false;
@@ -130,9 +126,9 @@ class ScreenFour extends Screen {
 				Actuate.tween(game.player.particleEmitter, 1, { alive: 0.1 } );
 				
 				Actuate.tween(game.skyEffectController.primaries, 1, {
-					x: 5.8e-7,
-					y: 5.5e-7,
-					z: 5.7e-7
+					x: 6.8e-7,
+					y: 4.5e-7,
+					z: 4.5e-7
 				});
 				game.starEmitter.opacityMiddle = 1.0;
 				game.starEmitter.acceleration.set(0, 0, 830);

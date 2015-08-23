@@ -16,7 +16,6 @@ class RandomScreen extends Screen {
 	
 	override public function onFirstEnter() {
 		super.onFirstEnter();
-		game.setGameText(gameText);
 	}
 	
 	override public function onFirstExit() {
@@ -25,6 +24,10 @@ class RandomScreen extends Screen {
 	
 	override public function onEnter() {
 		super.onEnter();
+		
+		if (!game.playerReturningToStart) {
+			game.setGameText(gameText);
+		}
 	}
 	
 	override public function skyEnterTransition() {
@@ -38,45 +41,7 @@ class RandomScreen extends Screen {
 			case 5:
 				sunup3();
 			case 6:
-			case 7:
-			case 8:
-			case 9:
-			case 10:
-			case 11:
-			case 12:
-			case 13:
-			case 14:
-			case 15:
-			case 16:
-			case 17:
-			case 18:
-			case 19:
-			case 20:
-			case 21:
-			case 22:
-			case 23:
-			case 24:
-			case 25:
-			case 26:
-			case 27:
-			case 28:
-			case 29:
-			case 30:
-			case 31:
-			case 32:
-			case 33:
-			case 34:
-			case 35:
-			case 36:
-			case 37:
-			case 38:
-			case 39:
-			case 40:
-			case 41:
-			case 42:
-			case 43:
-			case 44:
-			case 45:
+				sunup4();
 			default:
 				mutateSky();
 		}
@@ -172,8 +137,34 @@ class RandomScreen extends Screen {
 		});
 	}
 	
-	private function mutateSky():Void {
-		// TODO
+	private function sunup4():Void {
+		Actuate.tween(game.skyEffectController, 3, {
+			turbidity: 5.825,
+			rayleigh: 6.05,
+			mieCoefficient: 0.017225,
+			mieDirectionalG: 0.842,
+			luminance: 1.0755,
+			inclination: 0.4912,
+			azimuth: 0.2171,
+			refractiveIndex: 1.000295,
+			numMolecules: 2.542e25,
+			depolarizationFactor: 0.083,
+			rayleighZenithLength: 3225,
+			mieV: 4.003,
+			mieZenithLength: 500,
+			sunIntensityFactor: 1936,
+			sunIntensityFalloffSteepness: 2.95,
+			sunAngularDiameterDegrees: 0.01674
+		}).onUpdate(function() {
+			game.skyEffectController.updateUniforms();
+		});
+		
+		Actuate.tween(game.skyEffectController.cameraPos, 3, {
+			y: -26750
+		});
+	}
+	
+	private function mutateSky():Void {		
 		Actuate.tween(game.skyEffectController, 3, {
 			turbidity: 7.25,
 			rayleigh: 4.815,
@@ -194,11 +185,17 @@ class RandomScreen extends Screen {
 		}).onUpdate(function() {
 			game.skyEffectController.updateUniforms();
 		});
+		
+		Actuate.tween(game.skyEffectController.cameraPos, 3, {
+			y: -42000,
+		});
+		
+		if(Math.random() < 0.5) {
+			game.starEmitter.accelerationSpread.set(Math.random() * 5, Math.random() * 5, 0);
+		} else {
+			game.starEmitter.accelerationSpread.set(0, 0, 0);
+		}
 	}
-	
-	//private var templeSpecs:Array<[
-	
-	private var tweenFunctions:Array<Void->Void> = new Array<Void->Void>();
 	
 	private var templeDescriptions:Array<Array<String>> = [ [""], [""], [""] ];
 	private var tombDescriptions:Array<Array<String>> = [ [""], [""], [""] ];
