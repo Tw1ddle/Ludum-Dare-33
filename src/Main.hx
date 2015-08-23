@@ -444,16 +444,20 @@ class Main {
 		}
 	}
 	
-	public inline function setGameText(text:String, color:String = '#990000', ?showDuration:Null<Float>):Void {
+	public inline function setGameText(text:String, color:String = '#990000', ?showDuration:Null<Float>, ?ease:IEasing):Void {
 		if (showDuration == null) {
 			showDuration = text.length * 0.04;
+		}
+		
+		if (ease == null) {
+			ease = Linear.easeNone;
 		}
 		
 		gameTextFractionShown = 0.0;
 		Actuate.tween(this, showDuration, { gameTextFractionShown: 1.0 } ).onUpdate(function() {
 			gameText.innerHTML = text.substring(0, Std.int(text.length * gameTextFractionShown));
 			gameText.style.color = color;
-		}).ease(Linear.easeNone);
+		}).ease(ease);
 	}
 	
 	public function onObjectClicked(x:Float, y:Float):Void {
@@ -463,8 +467,6 @@ class Main {
 				setGameText(describable.clickText(hoveredObjectClickCount));
 				hoveredObjectClickCount++;
 			}
-		} else {
-			player.fire(x, y);
 		}
 	}
 	
@@ -475,28 +477,41 @@ class Main {
 		raycastingEnabled = false;
 		
 		var duration = ScreenSwitcher.getScreenIndices(lastPlayerPosition).x * 2;
+		setGameText(makeDeathMessage(), duration, Quad.easeInOut);
 		
 		Actuate.tween(player.particleEmitter, duration, { alive: 0.1 } );
+		
+		Actuate.tween(skyEffectController.primaries, 3, {
+			x: 5.8e-7,
+			y: 5.5e-7,
+			z: 5.7e-7
+		});
 		
 		Actuate.tween(player.position, duration, { x: 0 } ).onUpdate(function() {
 			player.signal_PositionChanged.dispatch(player.position);
 		}).onComplete(function() {
-			playerReturningToStart = false;
-			restoreSkyToDefaults();
+			setGameText(".........", 3);
+			screenZero.starEmitter.alive = 1.0;
 			
-			for (screen in screens) {
-				screen.reset();
-			}
+			Actuate.tween(screenZero.starEmitter, 2, { alive: 0.1 } ).onComplete(function() {				
+				restoreSkyToDefaults(3);
+				restoreStarsToDefaults();
+				
+				playerReturningToStart = false;
+				
+				for (screen in screens) {
+					screen.reset();
+				}
+				
+				player.inputEnabled = true;
+				player.reset();
+				raycastingEnabled = true;
+			});
 			
-			player.inputEnabled = true;
-			player.reset();
-			raycastingEnabled = true;
 		}).ease(Quad.easeInOut);
 		Actuate.tween(worldCameraFollowPoint, duration, { x: 0 } ).onUpdate(function() {
 			worldCamera.position.x = worldCameraFollowPoint.x;
 		}).ease(Quad.easeInOut);
-		
-		setGameText(makeDeathMessage(), duration);
 	}
 	
 	public inline function makeDeathMessage():String {

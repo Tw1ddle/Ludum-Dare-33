@@ -12,7 +12,6 @@ import ludum.DescribableMesh;
 class Screen {
 	public var active(default, set):Bool;
 	public var enemies(default, null) = new Array<Enemy>();
-	private var bullets = new Array<Bullet>();
 	private var index:Vector2;
 	private var game:Main;
 	private var firstEnter:Bool;
@@ -82,14 +81,14 @@ class Screen {
 		for (enemy in enemies) {
 			enemy.update(dt);
 		}
-		
-		for (bullet in bullets) {
-			bullet.update(dt);
-		}
 	}
 	
 	public function reset():Void {
-		
+		firstEnter = true;
+		firstExit = true;
+		if (index.x != 0) { // To avoid deactivating the first screen by mistake on death
+			active = false;
+		}
 	}
 	
 	private function set_active(active:Bool):Bool {

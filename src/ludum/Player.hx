@@ -165,12 +165,6 @@ class Player extends Mesh {
 		particleEmitter.velocitySpread.set(10, 10, 10);
 	}
 	
-	public inline function fire(x:Float, y:Float):Void {
-		var bullet = new Bullet(); // TODO use emitter pooling
-		bullet.position.set(position.x, position.y, position.z);
-		//bullet.velocity.set(x, y);
-	}
-	
 	private static var vocabulary:Array<String> = [ "twinkle", "glow", "sparkle", "glimmer", "gleam", "glint", "blaze", "flicker", "glitter", "shimmer", "glare", "shine" ];
 	public static function randomMessage(parts:Int):String {
 		if (parts == 0) {

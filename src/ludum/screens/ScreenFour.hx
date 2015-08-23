@@ -4,10 +4,35 @@ import external.dat.GUI;
 import js.three.Vector2;
 import ludum.Enemy;
 
+typedef SpeechDef = { text:String, color:String }
+
 class ScreenFour extends Screen {
 	private var visnu:Enemy;
 	private var varuna:Enemy;
 	private var vayu:Enemy;
+	
+	private static var godTalk:Array<SpeechDef> = [
+		{ text: "So you came here again Agni...", color: "#AAAAAA" },
+		{ text: "So you came here again Agni...", color: "#AAAAAA" },
+		{ text: "So you came here again Agni...", color: "#AAAAAA" },
+		{ text: "So you came here again Agni...", color: "#AAAAAA" },
+		{ text: "So you came here again Agni...", color: "#AAAAAA" },
+		{ text: "So you came here again Agni...", color: "#AAAAAA" },
+		{ text: "So you came here again Agni...", color: "#AAAAAA" },
+		{ text: "So you came here again Agni...", color: "#AAAAAA" },
+		{ text: "So you came here again Agni...", color: "#AAAAAA" },
+		{ text: "So you came here again Agni...", color: "#AAAAAA" },
+		{ text: "So you came here again Agni...", color: "#AAAAAA" },
+		{ text: "So you came here again Agni...", color: "#AAAAAA" },
+		{ text: "So you came here again Agni...", color: "#AAAAAA" },
+		{ text: "So you came here again Agni...", color: "#AAAAAA" },
+		{ text: "So you came here again Agni...", color: "#AAAAAA" },
+		{ text: "So you came here again Agni...", color: "#AAAAAA" },
+		{ text: "So you came here again Agni...", color: "#AAAAAA" },
+		{ text: "So you came here again Agni...", color: "#AAAAAA" },
+		{ text: "So you came here again Agni...", color: "#AAAAAA" }
+	];
+	private var godTalkTextIndex:Int = 0;
 	
 	public function new(game:Main, index:Vector2, active:Bool = false) {
 		super(game, index, active);
@@ -19,6 +44,8 @@ class ScreenFour extends Screen {
 		visnu = new Enemy(game.worldScene, 0, 0, "God of Earth");
 		varuna = new Enemy(game.worldScene, 0, 0, "God of Water");
 		vayu = new Enemy(game.worldScene, 0, 0, "God of Air");
+		
+		game.signal_playerClicked.add(advanceText);
 	}
 	
 	override public function permitsTransition(next:Screen):Bool {
@@ -57,4 +84,15 @@ class ScreenFour extends Screen {
 	override public function addGUIItems(gui:GUI):Void {
 	}
 	#end
+	
+	private function advanceText(x:Float, y:Float):Void {
+		if (active) {
+			godTalkTextIndex++;
+			if (godTalkTextIndex > godTalk.length) {
+				game.player.signal_Died.dispatch();
+			} else {
+				game.setGameText(godTalk[godTalkTextIndex].text, godTalk[godTalkTextIndex].color);
+			}
+		}
+	}
 }
