@@ -159,6 +159,7 @@ class Player extends Mesh {
 		velocity.set(0, 0);
 		inputEnabled = true;
 		pressedArrowKey = false;
+		baseVelocity = Math.min(baseVelocity, 350);
 		
 		// TODO reset whole particle system
 		particleEmitter.alive = 0.1;

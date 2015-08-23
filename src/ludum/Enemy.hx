@@ -46,7 +46,7 @@ class Enemy extends Mesh implements Describable {
 			sizeStart: 42,
 			sizeEnd: 60,
 			opacityStart: 0.9,
-			opacityEnd: 0
+			opacityEnd: 0.0
 		});
 		
 		#if debug
@@ -61,8 +61,17 @@ class Enemy extends Mesh implements Describable {
 		scene.add(this);
 	}
 	
-	public function tweenPosition():Void {
-		// TODO get next position in upper quartile of screen, or relative to player?
+	public function reset():Void {
+		particleEmitter.position = this.position;
+		particleEmitter.acceleration.set(0, 0, 0);
+		particleEmitter.velocity.set(0, 0, 0);
+		particleEmitter.velocitySpread.set(7, 3, 0);
+		particleEmitter.accelerationSpread.set(21, 30, 0);
+		particleEmitter.particleCount = 700;
+		particleEmitter.sizeStart = 42;
+		particleEmitter.sizeEnd = 60;
+		particleEmitter.opacityStart = 0.9;
+		particleEmitter.opacityEnd = 0.0;
 	}
 	
 	public inline function update(dt:Float):Void {

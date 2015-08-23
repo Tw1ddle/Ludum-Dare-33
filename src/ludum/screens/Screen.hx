@@ -89,6 +89,10 @@ class Screen {
 		if (index.x != 0) { // To avoid deactivating the first screen by mistake on death
 			active = false;
 		}
+		
+		for (enemy in enemies) {
+			enemy.reset();
+		}
 	}
 	
 	private function set_active(active:Bool):Bool {

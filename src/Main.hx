@@ -91,7 +91,7 @@ class Main {
 	private var seaOfStarsText:CinematicText = new CinematicText();
 	
 	private var lastPlayerPosition:Vector3 = new Vector3();
-	private var playerReturningToStart:Bool = false; // Player returns to start after death
+	public var playerReturningToStart(default, null):Bool = false; // Player returns to start after death
 	
 	private var screenZero:ScreenZero;
 	private var screenOne:ScreenOne;
@@ -486,6 +486,12 @@ class Main {
 			y: 5.5e-7,
 			z: 5.7e-7
 		});
+		starEmitter.opacityMiddle = 1.0;
+		starEmitter.acceleration.set(0, 0, 830);
+		starEmitter.accelerationSpread.set(0, 0, 560);
+		starEmitter.alive = 1.0;
+		
+		player.particleEmitter.alive = 0.0;
 		
 		Actuate.tween(player.position, duration, { x: 0 } ).onUpdate(function() {
 			player.signal_PositionChanged.dispatch(player.position);

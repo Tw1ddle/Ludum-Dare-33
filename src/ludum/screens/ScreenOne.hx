@@ -35,6 +35,15 @@ class ScreenOne extends Screen {
 		return spiritDied;
 	}
 	
+	override public function reset():Void {
+		super.reset();
+		
+		spiritDied = false;
+		spirit.position.x = spiritCross.position.x;
+		spirit.position.y = spiritCross.position.y;
+		spirit.particleEmitter.alive = 1.0;
+	}
+	
 	public function onSpiritDied() {
 		spiritDied = true;
 		game.setGameText("Stupid spirit, you don't tell ME what to do...");
@@ -119,10 +128,6 @@ class ScreenOne extends Screen {
 		super.onExit();
 		game.restoreStarsToDefaults();
 	}	
-	
-	override public function reset() {
-		super.reset();
-	}
 	
 	override public function update(dt:Float):Void {
 		super.update(dt);

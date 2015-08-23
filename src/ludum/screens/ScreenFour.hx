@@ -54,6 +54,8 @@ class ScreenFour extends Screen {
 	
 	override public function onFirstEnter() {
 		super.onFirstEnter();
+		
+		advanceText(0, 0);
 	}
 	
 	override public function onFirstExit() {
@@ -88,7 +90,7 @@ class ScreenFour extends Screen {
 	private function advanceText(x:Float, y:Float):Void {
 		if (active) {
 			godTalkTextIndex++;
-			if (godTalkTextIndex > godTalk.length) {
+			if (godTalkTextIndex > godTalk.length && !game.playerReturningToStart) {
 				game.player.signal_Died.dispatch();
 			} else {
 				game.setGameText(godTalk[godTalkTextIndex].text, godTalk[godTalkTextIndex].color);
