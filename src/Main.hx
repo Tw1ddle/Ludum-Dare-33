@@ -321,17 +321,11 @@ class Main {
 		
 		// Mouse events
         Browser.document.addEventListener('mousedown', function(event) {
-			if (event.which != 1) {
-				return;
-			}
 			event.preventDefault();
 			updateMousePosition(event.clientX, event.clientY);
 			signal_playerClicked.dispatch(mouse.x, mouse.y);
         }, false);
         Browser.document.addEventListener('mouseup', function(event) {
-			if (event.which != 1) {
-				return;
-			}
 			event.preventDefault();
 			updateMousePosition(event.clientX, event.clientY);
         }, false);
