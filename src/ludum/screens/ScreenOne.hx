@@ -122,6 +122,8 @@ class ScreenOne extends Screen {
 	
 	override public function onEnter() {
 		super.onEnter();
+		
+		game.raycastingEnabled = true; // Hack to avoid text getting chopped off by interactables raycasting bug after this screen
 	}
 	
 	override public function onExit() {

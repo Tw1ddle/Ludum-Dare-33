@@ -2,7 +2,7 @@
 
 My entry for Ludum Dare 33, the world's largest online game jam.
 
-Play it [here](TODO), visit the Ludum Dare [submission page](TODO), or watch this [playthrough video](https://www.youtube.com/watch?v=TxFP0QTp4XI).
+Play it [here](http://samcodes.itch.io/otherworldly-stars), visit the Ludum Dare [submission page](http://ludumdare.com/compo/ludum-dare-33/?action=preview&uid=42276), or watch this [playthrough video](https://www.youtube.com/watch?v=TxFP0QTp4XI).
 
 ### About
 
