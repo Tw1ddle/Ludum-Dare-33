@@ -420,8 +420,6 @@ class Main {
 				var player:Player = cast o;
 				setGameText(Player.randomMessage(Std.int(Math.random() * 3)));
 			}
-		} else {
-			setGameText("");
 		}
 	}
 	
@@ -446,7 +444,7 @@ class Main {
 	}
 	
 	public function onObjectClicked(x:Float, y:Float):Void {
-		if (hoveredObject != null) {
+		if (hoveredObject != null && raycastingEnabled) {
 			if (Std.is(hoveredObject, Describable)) {
 				var describable:Describable = cast hoveredObject;
 				setGameText(describable.clickText(hoveredObjectClickCount));
