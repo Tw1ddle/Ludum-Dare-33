@@ -100,10 +100,6 @@ class Main {
 	private var screenFour:ScreenFour;
 	private var screens:List<Screen> = new List<Screen>();
 	
-	#if debug
-	private var xKeyDown:Bool = false;
-	#end
-	
 	private var lastAnimationTime:Float = 0.0; // Last time from requestAnimationFrame
 	private var dt:Float = 0.0; // Frame delta time
 	
@@ -324,49 +320,21 @@ class Main {
 		
 		// Mouse events
         Browser.document.addEventListener('mousedown', function(event) {
-			event.preventDefault();
 			updateMousePosition(event.clientX, event.clientY);
 			signal_playerClicked.dispatch(mouse.x, mouse.y);
-        }, false);
+        }, true);
         Browser.document.addEventListener('mouseup', function(event) {
-			event.preventDefault();
 			updateMousePosition(event.clientX, event.clientY);
-        }, false);
+        }, true);
         Browser.document.addEventListener('mousemove', function(event) {
             event.preventDefault();
 			updateMousePosition(event.clientX, event.clientY);
-        }, false);
-		
-		// Key events
-        Browser.document.addEventListener('keydown', function(event) {
-			var charCode:Int = event.keyCode;
-			
-			#if debug
-			if (charCode == 88) {
-				xKeyDown = true;
-				player.signal_Died.dispatch();
-			}
-			#end
-        }, false);
-        Browser.document.addEventListener('keyup', function(event) {
-			var charCode = event.keyCode;
-			
-			#if debug
-			if (charCode == 88) {
-				xKeyDown = false;
-			}
-			#end
-        }, false);
+        }, true);
 		
 		// Disable context menu opening
 		Browser.document.addEventListener('contextmenu', function(event) {
 			event.preventDefault();
-		}, false);
-		
-		// Disable page scrolling with keys etc
-		Browser.document.addEventListener('DOMMouseScroll', function(event) {
-			event.preventDefault();
-		}, false);
+		}, true);
 		
 		// Debug setup
 		#if debug

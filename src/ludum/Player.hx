@@ -120,14 +120,10 @@ class Player extends Mesh {
 	
 	public function setupInputEvents():Void {
 		// Input events
-		Browser.document.addEventListener('keydown', function(event) {
-			trace("got keydown");
-			
+		Browser.document.addEventListener('keydown', function(event) {			
 			if (!inputEnabled) {
 				return;
 			}
-			
-			trace("keydown, player input enabled");
 			
 			var keyCode:Int = event.keyCode;
 			
@@ -140,15 +136,11 @@ class Player extends Mesh {
 				case 40:
 				default:
 			}
-		}, false);
+		}, true);
 		Browser.document.addEventListener('keyup', function(event) {
-			trace("got keyup");
-			
 			if (!inputEnabled) {
 				return;
 			}
-			
-			trace("keyup, player input enabled");
 			
 			var keyCode:Int = event.keyCode;
 			
@@ -161,7 +153,7 @@ class Player extends Mesh {
 				case 40:
 				default:
 			}
-		}, false);
+		}, true);
 	}
 	
 	private static var vocabulary:Array<String> = [ "twinkle", "glow", "sparkle", "glimmer", "gleam", "glint", "blaze", "flicker", "glitter", "shimmer", "glare", "shine" ];
