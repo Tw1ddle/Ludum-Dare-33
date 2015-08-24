@@ -412,7 +412,7 @@ class Main {
 	public function onHoveredObjectChanged(o:Object3D):Void {
 		hoveredObjectClickCount = 0;
 		
-		if (o != null) {
+		if (o != null && raycastingEnabled) {
 			if (Std.is(o, Describable)) {
 				var describable:Describable = cast o;
 				setGameText(describable.hoverText);
