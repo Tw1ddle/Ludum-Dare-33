@@ -1,4 +1,6 @@
-### Building
+### Ludum Dare 33 - Otherworldly Stars
+
+[![Build Status](https://img.shields.io/travis/Tw1ddle/Ludum-Dare-33.svg?style=flat-square)](https://travis-ci.org/Tw1ddle/Ludum-Dare-33)
 
 For Windows, open the .hxproj in FlashDevelop, select either debug or release configuration and hit test. 
 
