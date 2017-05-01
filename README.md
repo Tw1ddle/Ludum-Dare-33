@@ -23,7 +23,7 @@ Otherworldly Stars is a HTML5/WebGL game and has a graphical style inspired by t
 #### August ####
 * 7th-11th: Created boilerplate base code.
 * 11th-13th: Reorganize repo for separate debug/release builds.
-* 13th-14th: Implement sky shader based off of the [three.js](http://threejs.org/examples/#webgl_shaders_sky) sky example.
+* 13th-14th: Implement sky shader based off of the [three.js](https://threejs.org/examples/#webgl_shaders_sky) sky example.
 * 15th-16th: Implement tweenable text.
 * 16th-21st: Holiday!
 * 22nd-24th: The Compo.
