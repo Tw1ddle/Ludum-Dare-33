@@ -4,11 +4,11 @@
 
 Entry for Ludum Dare 33, the world's largest online game jam.
 
-Play it [here](http://samcodes.itch.io/otherworldly-stars), visit the Ludum Dare [submission page](http://ludumdare.com/compo/ludum-dare-33/?action=preview&uid=42276), or watch this [playthrough video](https://www.youtube.com/watch?v=TxFP0QTp4XI).
+Play it [here](https://samcodes.itch.io/otherworldly-stars) or watch this [playthrough video](https://www.youtube.com/watch?v=TxFP0QTp4XI).
 
 ### About
 
-Otherworldly Stars is a HTML5/WebGL game and has a graphical style inspired by the Ludum Dare 29 entry Beneath The Cave by [feiss](http://ludumdare.com/compo/author/feiss/) and Alto's Adventure by [Snowman](https://itunes.apple.com/gb/app/altos-adventure/id950812012). It requires a recent graphics card and modern browser with WebGL support to run.
+Otherworldly Stars is a HTML5/WebGL game and has a graphical style inspired by the Ludum Dare 29 entry Beneath The Cave by [feiss](https://ludumdare.com/compo/author/feiss/) and Alto's Adventure by [Snowman](https://itunes.apple.com/gb/app/altos-adventure/id950812012). It requires a recent graphics card and modern browser with WebGL support to run.
 
 ### Screenshots
 
@@ -28,14 +28,14 @@ Otherworldly Stars is a HTML5/WebGL game and has a graphical style inspired by t
 * 16th-21st: Holiday!
 * 22nd-24th: The Compo.
 
-See the [writeup](http://samcodes.co.uk/ludum-dare-33-dev-log/) blogpost.
+See the [writeup](https://samcodes.co.uk/ludum-dare-33-dev-log/) blogpost.
 
 ### Credits
 
-This project is written using the [Haxe](http://haxe.org/) programming language and depends on:
+This project is written using the [Haxe](https://haxe.org/) programming language and depends on:
 
 * [three.js](https://github.com/mrdoob/three.js) for rendering.
-* Yaroslav Sivakov's [three.js](http://lib.haxe.org/u/yar3333/) externs.
-* Joshua Granick's [actuate](http://lib.haxe.org/p/actuate) tweening library.
+* Yaroslav Sivakov's [three.js](https://lib.haxe.org/u/yar3333/) externs.
+* Joshua Granick's [actuate](https://lib.haxe.org/p/actuate) tweening library.
 * Luke Moody's [ShaderParticleEngine](https://github.com/squarefeet/ShaderParticleEngine) particle engine and editor for three.js.
-* Massive Interactive's [msignal](http://lib.haxe.org/p/msignal/) signals library.
+* Massive Interactive's [msignal](https://lib.haxe.org/p/msignal/) signals library.
