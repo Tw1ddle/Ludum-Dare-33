@@ -6,7 +6,7 @@ Play it [here](https://samcodes.itch.io/otherworldly-stars) or watch this [playt
 
 ### About
 
-Otherworldly Stars is a HTML5/WebGL game and has a graphical style inspired by the Ludum Dare 29 entry Beneath The Cave by [feiss](https://ludumdare.com/compo/author/feiss/) and Alto's Adventure by [Snowman](https://itunes.apple.com/gb/app/altos-adventure/id950812012). It requires a recent graphics card and modern browser with WebGL support to run.
+Otherworldly Stars is a HTML5/WebGL game and has a graphical style inspired by the Ludum Dare 29 entry Beneath The Cave by feiss and Alto's Adventure by [Snowman](https://itunes.apple.com/gb/app/altos-adventure/id950812012). It requires a recent graphics card and modern browser with WebGL support to run.
 
 ### Screenshots
 
