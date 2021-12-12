@@ -1,7 +1,5 @@
 # Otherworldly Stars
 
-[![Build Status](https://img.shields.io/travis/Tw1ddle/Ludum-Dare-33.svg?style=flat-square)](https://travis-ci.org/Tw1ddle/Ludum-Dare-33)
-
 Entry for Ludum Dare 33, the world's largest online game jam.
 
 Play it [here](https://samcodes.itch.io/otherworldly-stars) or watch this [playthrough video](https://www.youtube.com/watch?v=TxFP0QTp4XI).
